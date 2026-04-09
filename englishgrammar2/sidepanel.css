@@ -51,15 +51,22 @@ body {
 
 /* ── 로딩 스켈레톤 ── */
 .skel {
-  height: 16px; border-radius: 6px;
+  height: 14px; border-radius: 6px;
   background: linear-gradient(90deg, #e2e8f0 25%, #cbd5e1 50%, #e2e8f0 75%);
   background-size: 200% 100%;
   animation: shimmer 1.4s infinite;
 }
 .skel-long  { width: 90%; }
-.skel-mid   { width: 65%; }
-.skel-short { width: 40%; }
+.skel-mid   { width: 60%; }
+.skel-short { width: 35%; }
 @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+.skel-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.skel-chip { width: 100px; height: 56px; border-radius: 8px; }
+.skel-chip-wide { width: 180px; height: 56px; border-radius: 8px; }
+
+.skel-words { display: flex; flex-direction: column; gap: 4px; }
+.skel-word { width: 100%; height: 42px; border-radius: 7px; }
 
 /* ── 에러 상태 ── */
 .error-icon { font-size: 36px; }

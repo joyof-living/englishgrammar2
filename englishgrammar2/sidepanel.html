@@ -29,11 +29,50 @@
     </div>
 
     <!-- ── 로딩 상태 ── -->
-    <div id="state-loading" class="state" style="display:none">
-      <div class="skel skel-long"></div>
-      <div class="skel skel-short"></div>
-      <div class="skel skel-long"></div>
-      <div class="skel skel-mid"></div>
+    <div id="state-loading" style="display:none">
+
+      <!-- 원문 스켈레톤 -->
+      <div class="sentence-box">
+        <div class="skel skel-long"></div>
+        <div class="skel skel-mid" style="margin-top:6px"></div>
+      </div>
+
+      <!-- 문장 구조 스켈레톤 -->
+      <section class="section">
+        <div class="section-header">
+          <span class="section-title">문장 구조</span>
+          <span class="section-hint">Layer 0 — SVOCA</span>
+        </div>
+        <div class="skel-chips">
+          <div class="skel skel-chip"></div>
+          <div class="skel skel-chip"></div>
+          <div class="skel skel-chip-wide"></div>
+          <div class="skel skel-chip"></div>
+        </div>
+      </section>
+
+      <!-- 번역 스켈레톤 -->
+      <section class="section">
+        <div class="section-header">
+          <span class="section-title">번역</span>
+        </div>
+        <div class="translation-box">
+          <div class="skel skel-long"></div>
+          <div class="skel skel-short" style="margin-top:6px"></div>
+        </div>
+      </section>
+
+      <!-- 단어 스켈레톤 -->
+      <section class="section">
+        <div class="section-header">
+          <span class="section-title">단어</span>
+        </div>
+        <div class="skel-words">
+          <div class="skel skel-word"></div>
+          <div class="skel skel-word"></div>
+          <div class="skel skel-word"></div>
+        </div>
+      </section>
     </div>
 
     <!-- ── 에러 상태 ── -->

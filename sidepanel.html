@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ET Grammar</title>
+  <link rel="stylesheet" href="sidepanel.css">
+</head>
+<body>
+  <div id="app">
+
+    <!-- ── 헤더 ── -->
+    <header class="header">
+      <div class="header-left">
+        <span class="logo">ET</span>
+        <div>
+          <div class="title">Grammar</div>
+          <div class="subtitle">SVOCA 분석기</div>
+        </div>
+      </div>
+      <button id="api-btn" class="icon-btn" title="API 키 설정">⚙</button>
+    </header>
+
+    <!-- ── 빈 상태 ── -->
+    <div id="state-empty" class="state">
+      <div class="empty-icon">📖</div>
+      <p class="empty-text">웹페이지에서 영어 문장을 선택하면<br>자동으로 분석을 시작합니다.</p>
+      <p class="empty-hint">최대 300 단어까지 분석 가능합니다.</p>
+    </div>
+
+    <!-- ── 로딩 상태 ── -->
+    <div id="state-loading" class="state" style="display:none">
+      <div class="skel skel-long"></div>
+      <div class="skel skel-short"></div>
+      <div class="skel skel-long"></div>
+      <div class="skel skel-mid"></div>
+    </div>
+
+    <!-- ── 에러 상태 ── -->
+    <div id="state-error" class="state" style="display:none">
+      <div class="error-icon">⚠️</div>
+      <p id="error-msg" class="error-msg"></p>
+      <button id="options-btn" class="link-btn" style="display:none">API 키 설정 →</button>
+    </div>
+
+    <!-- ── 결과 상태 ── -->
+    <div id="state-result" style="display:none">
+
+      <!-- 정제 알림 -->
+      <div id="norm-notice" class="norm-notice" style="display:none">
+        <span class="norm-badge">✏️ 정제됨</span>
+        <span id="norm-notes" class="norm-notes"></span>
+      </div>
+
+      <!-- 원문 -->
+      <div id="sentence-box" class="sentence-box"></div>
+
+      <!-- 문장 구조 -->
+      <section class="section">
+        <div class="section-header">
+          <span class="section-title">문장 구조</span>
+          <span class="section-hint">Layer 0 — SVOCA</span>
+        </div>
+        <div id="grammar-wrap" class="grammar-wrap"></div>
+      </section>
+
+      <!-- 번역 -->
+      <section class="section">
+        <div class="section-header">
+          <span class="section-title">번역</span>
+        </div>
+        <div id="translation-box" class="translation-box"></div>
+      </section>
+
+      <!-- 단어 -->
+      <section class="section">
+        <div class="section-header">
+          <span class="section-title">단어</span>
+        </div>
+        <div id="words-wrap" class="words-wrap"></div>
+      </section>
+
+    </div>
+
+  </div>
+
+  <script src="sidepanel.js"></script>
+</body>
+</html>

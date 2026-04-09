@@ -1,0 +1,223 @@
+/* ── 기본 ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-size: 14px;
+  color: #1e293b;
+  background: #f8fafc;
+  min-height: 100vh;
+}
+
+#app { display: flex; flex-direction: column; min-height: 100vh; }
+
+/* ── 헤더 ── */
+.header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 14px;
+  background: #1e40af;
+  color: #fff;
+  flex-shrink: 0;
+}
+.header-left { display: flex; align-items: center; gap: 10px; }
+.logo {
+  width: 34px; height: 34px;
+  background: #fff; color: #1e40af;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 900; font-size: 15px; letter-spacing: -1px;
+}
+.title { font-weight: 700; font-size: 15px; line-height: 1.2; }
+.subtitle { font-size: 11px; opacity: 0.75; }
+
+.icon-btn {
+  background: rgba(255,255,255,0.15); border: none; color: #fff;
+  width: 30px; height: 30px; border-radius: 6px;
+  cursor: pointer; font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+}
+.icon-btn:hover { background: rgba(255,255,255,0.25); }
+
+/* ── 상태 컨테이너 ── */
+.state {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 10px; padding: 40px 20px; flex: 1;
+}
+
+/* ── 빈 상태 ── */
+.empty-icon { font-size: 40px; }
+.empty-text { text-align: center; color: #475569; line-height: 1.6; }
+.empty-hint { font-size: 12px; color: #94a3b8; }
+
+/* ── 로딩 스켈레톤 ── */
+.skel {
+  height: 16px; border-radius: 6px;
+  background: linear-gradient(90deg, #e2e8f0 25%, #cbd5e1 50%, #e2e8f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+.skel-long  { width: 90%; }
+.skel-mid   { width: 65%; }
+.skel-short { width: 40%; }
+@keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+/* ── 에러 상태 ── */
+.error-icon { font-size: 36px; }
+.error-msg { text-align: center; color: #dc2626; max-width: 260px; line-height: 1.5; }
+.link-btn {
+  background: none; border: 1px solid #2563eb; color: #2563eb;
+  padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 13px;
+}
+.link-btn:hover { background: #eff6ff; }
+
+/* ── 결과 영역 ── */
+#state-result { padding: 0 0 20px; }
+
+/* ── 정제 알림 ── */
+.norm-notice {
+  margin: 10px 12px 0;
+  padding: 8px 12px;
+  background: #fefce8; border: 1px solid #fde047; border-radius: 8px;
+  display: flex; gap: 8px; align-items: flex-start;
+}
+.norm-badge { font-size: 12px; font-weight: 700; color: #a16207; white-space: nowrap; }
+.norm-notes { font-size: 12px; color: #78350f; line-height: 1.5; }
+
+/* ── 원문 ── */
+.sentence-box {
+  margin: 10px 12px 0;
+  padding: 10px 12px;
+  background: #fff; border: 1px solid #e2e8f0; border-radius: 8px;
+  font-size: 13px; color: #475569; line-height: 1.6; word-break: break-word;
+}
+
+/* ── 섹션 ── */
+.section { margin: 12px 12px 0; }
+.section-header {
+  display: flex; align-items: baseline; justify-content: space-between;
+  margin-bottom: 8px;
+}
+.section-title { font-weight: 700; font-size: 13px; color: #334155; }
+.section-hint { font-size: 11px; color: #94a3b8; }
+
+/* ── 문법 칩 영역 ── */
+.grammar-wrap { display: flex; flex-direction: column; gap: 6px; }
+
+.chip-row { display: flex; flex-wrap: wrap; gap: 6px; }
+
+/* 기본 칩 */
+.chip {
+  display: inline-flex; flex-direction: column; gap: 2px;
+  padding: 6px 10px; border-radius: 8px;
+  border: 1.5px solid transparent;
+  max-width: 100%; word-break: break-word;
+}
+.chip-role {
+  font-size: 10px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
+  line-height: 1;
+}
+.chip-text { font-size: 13px; font-weight: 500; line-height: 1.4; }
+.chip-korean { font-size: 11px; opacity: 0.7; line-height: 1.3; }
+
+/* 드릴다운 가능한 칩 */
+.chip.drillable { cursor: pointer; }
+.chip.drillable:hover { filter: brightness(0.95); }
+.chip.expanded { border-radius: 8px 8px 0 0; }
+
+.chip-expand-icon { font-size: 10px; opacity: 0.6; margin-left: 4px; }
+
+/* 드릴다운 패널 */
+.drilldown-panel {
+  background: #fff;
+  border: 1.5px solid #e2e8f0;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  padding: 10px;
+  margin-bottom: 2px;
+}
+.drilldown-loading { color: #94a3b8; font-size: 12px; padding: 4px 0; }
+.drilldown-translation {
+  font-size: 12px; color: #64748b;
+  margin-top: 8px; padding-top: 8px;
+  border-top: 1px solid #f1f5f9;
+}
+.drilldown-label { font-size: 10px; font-weight: 700; color: #94a3b8; letter-spacing: 0.05em; }
+
+/* V 칩 추가 정보 (tense/voice) */
+.chip-meta {
+  font-size: 10px; color: #6b7280; margin-top: 2px;
+  font-style: italic;
+}
+
+/* ── 역할별 색상 ── */
+/* Layer 0 */
+.role-S  { background: #eff6ff; border-color: #bfdbfe; }
+.role-S  .chip-role { color: #1d4ed8; }
+
+.role-V  { background: #fef2f2; border-color: #fecaca; }
+.role-V  .chip-role { color: #b91c1c; }
+
+.role-O  { background: #f0fdf4; border-color: #bbf7d0; }
+.role-O  .chip-role { color: #15803d; }
+
+.role-C  { background: #f5f3ff; border-color: #ddd6fe; }
+.role-C  .chip-role { color: #6d28d9; }
+
+.role-A  { background: #fdf2f8; border-color: #fbcfe8; }
+.role-A  .chip-role { color: #be185d; }
+
+.role-conj { background: #f8fafc; border-color: #cbd5e1; }
+.role-conj .chip-role { color: #475569; }
+
+.role-interjection { background: #f9fafb; border-color: #e5e7eb; }
+.role-interjection  .chip-role { color: #6b7280; }
+
+/* Layer 1 */
+.role-MV   { background: #faf5ff; border-color: #e9d5ff; }
+.role-MV   .chip-role { color: #7c3aed; }
+
+.role-prep { background: #f7fee7; border-color: #d9f99d; }
+.role-prep .chip-role { color: #4d7c0f; }
+
+.role-head { background: #fff7ed; border-color: #fed7aa; }
+.role-head .chip-role { color: #c2410c; }
+
+.role-modifier { background: #ecfeff; border-color: #a5f3fc; }
+.role-modifier  .chip-role { color: #0e7490; }
+
+.role-adv { background: #fdf2f8; border-color: #fbcfe8; }
+.role-adv .chip-role { color: #be185d; }
+
+/* 소문자 roles (비한정 구) */
+.role-v, .role-o, .role-c, .role-a {
+  background: #f8fafc; border-color: #e2e8f0; border-style: dashed;
+}
+.role-v .chip-role, .role-o .chip-role,
+.role-c .chip-role, .role-a .chip-role { color: #64748b; }
+
+/* ── 번역 ── */
+.translation-box {
+  padding: 10px 12px;
+  background: #fff; border: 1px solid #e2e8f0; border-radius: 8px;
+  font-size: 14px; color: #1e293b; line-height: 1.7;
+}
+
+/* ── 단어 ── */
+.words-wrap { display: flex; flex-direction: column; gap: 4px; }
+
+.word-item {
+  padding: 8px 10px;
+  background: #fff; border: 1px solid #e2e8f0; border-radius: 7px;
+  display: flex; gap: 10px; align-items: flex-start;
+  cursor: default; transition: background 0.1s;
+}
+.word-item:hover { background: #f8fafc; }
+
+.word-en { font-weight: 700; font-size: 14px; color: #1e293b; min-width: 80px; }
+.word-pron { font-size: 11px; color: #94a3b8; display: block; }
+.word-pos {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.05em;
+  color: #6d28d9; background: #f5f3ff;
+  padding: 1px 5px; border-radius: 4px; align-self: flex-start; margin-top: 2px;
+}
+.word-def { font-size: 13px; color: #475569; line-height: 1.5; flex: 1; }

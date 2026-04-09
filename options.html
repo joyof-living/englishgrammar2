@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>ET Grammar — 설정</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #f8fafc; color: #1e293b;
+      display: flex; justify-content: center;
+      padding: 40px 20px;
+    }
+    .card {
+      background: #fff; border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      padding: 28px 32px; width: 100%; max-width: 480px;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+    }
+    .logo-row { display: flex; align-items: center; gap: 10px; margin-bottom: 24px; }
+    .logo {
+      width: 36px; height: 36px; background: #1e40af; color: #fff;
+      border-radius: 9px; display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 15px;
+    }
+    h1 { font-size: 18px; font-weight: 700; }
+
+    label { display: block; font-size: 13px; font-weight: 600; color: #374151; margin-bottom: 6px; }
+    input[type=text] {
+      width: 100%; padding: 9px 12px; border-radius: 7px;
+      border: 1.5px solid #d1d5db; font-size: 14px; font-family: monospace;
+      outline: none; transition: border-color 0.15s;
+    }
+    input[type=text]:focus { border-color: #2563eb; }
+
+    .hint { font-size: 12px; color: #6b7280; margin-top: 6px; }
+
+    button {
+      margin-top: 16px; width: 100%;
+      padding: 10px; background: #2563eb; color: #fff;
+      border: none; border-radius: 7px; font-size: 14px; font-weight: 600;
+      cursor: pointer; transition: background 0.15s;
+    }
+    button:hover { background: #1d4ed8; }
+
+    #status {
+      margin-top: 12px; padding: 8px 12px;
+      border-radius: 7px; font-size: 13px; text-align: center; display: none;
+    }
+    #status.ok  { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+    #status.err { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo-row">
+      <div class="logo">ET</div>
+      <h1>ET Grammar 설정</h1>
+    </div>
+
+    <label for="api-key">Gemini API 키</label>
+    <input type="text" id="api-key" placeholder="AIza..." autocomplete="off" spellcheck="false">
+    <p class="hint">
+      Google AI Studio (<a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a>)에서 무료로 발급받을 수 있습니다.
+    </p>
+
+    <button id="save-btn">저장</button>
+    <div id="status"></div>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>

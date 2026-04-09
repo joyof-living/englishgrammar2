@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>ET Grammar Icon Generator</title>
+  <style>
+    body { font-family: system-ui; padding: 40px; background: #f0f0f0; }
+    .icons { display: flex; gap: 30px; align-items: end; margin: 20px 0; }
+    .icon-box { text-align: center; }
+    .icon-box canvas { border: 1px solid #ccc; background: #fff; }
+    .icon-box p { margin: 8px 0 4px; font-size: 13px; color: #666; }
+    a { display: inline-block; margin-top: 6px; padding: 4px 12px; background: #2563eb; color: #fff; border-radius: 6px; text-decoration: none; font-size: 13px; }
+    a:hover { background: #1d4ed8; }
+    h1 { font-size: 20px; }
+    .note { color: #888; font-size: 13px; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h1>ET Grammar — Icon Generator</h1>
+  <p>각 아이콘의 "Download" 버튼을 클릭하여 PNG 파일을 저장하세요.</p>
+  <div class="icons" id="icons"></div>
+  <p class="note">저장 후 generate-icons.html 파일은 삭제해도 됩니다.</p>
+
+  <script>
+    const sizes = [16, 48, 128];
+
+    function drawIcon(ctx, size) {
+      const s = size / 128; // scale factor
+      ctx.clearRect(0, 0, size, size);
+
+      // Background rounded rect
+      const x = 4 * s, y = 4 * s, w = 120 * s, h = 120 * s, r = 26 * s;
+      const grad = ctx.createLinearGradient(0, 0, size, size);
+      grad.addColorStop(0, '#2563eb');
+      grad.addColorStop(1, '#1e40af');
+
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.lineTo(x + w - r, y);
+      ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+      ctx.lineTo(x + w, y + h - r);
+      ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+      ctx.lineTo(x + r, y + h);
+      ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+      ctx.lineTo(x, y + r);
+      ctx.quadraticCurveTo(x, y, x + r, y);
+      ctx.closePath();
+      ctx.fillStyle = grad;
+      ctx.fill();
+
+      // ET text
+      ctx.fillStyle = '#ffffff';
+      ctx.textBaseline = 'alphabetic';
+
+      if (size >= 48) {
+        // Full "ET" for 48px and 128px
+        const fontSize = Math.round(62 * s);
+        ctx.font = `900 ${fontSize}px system-ui, -apple-system, "Segoe UI", sans-serif`;
+        ctx.letterSpacing = `${-2 * s}px`;
+
+        // Measure to center
+        const etWidth = ctx.measureText('ET').width;
+        const textX = (size - etWidth) / 2;
+        const textY = 88 * s;
+        ctx.fillText('ET', textX, textY);
+        ctx.letterSpacing = '0px';
+
+        // Accent bar
+        const barGrad = ctx.createLinearGradient(26 * s, 0, 102 * s, 0);
+        barGrad.addColorStop(0, '#60a5fa');
+        barGrad.addColorStop(1, '#93c5fd');
+        ctx.globalAlpha = 0.9;
+        roundRect(ctx, 26 * s, 94 * s, 76 * s, 4 * s, 2 * s);
+        ctx.fillStyle = barGrad;
+        ctx.fill();
+        ctx.globalAlpha = 1.0;
+
+        // SVO dots
+        if (size >= 48) {
+          const dotR = 3 * s;
+          const dotY = 104 * s;
+          ctx.globalAlpha = 0.7;
+
+          ctx.fillStyle = '#60a5fa';
+          ctx.beginPath(); ctx.arc(42 * s, dotY, dotR, 0, Math.PI * 2); ctx.fill();
+
+          ctx.fillStyle = '#f87171';
+          ctx.beginPath(); ctx.arc(64 * s, dotY, dotR, 0, Math.PI * 2); ctx.fill();
+
+          ctx.fillStyle = '#4ade80';
+          ctx.beginPath(); ctx.arc(86 * s, dotY, dotR, 0, Math.PI * 2); ctx.fill();
+
+          ctx.globalAlpha = 1.0;
+        }
+      } else {
+        // 16px: simplified — just "E" centered
+        const fontSize = Math.round(11);
+        ctx.font = `900 ${fontSize}px system-ui, -apple-system, "Segoe UI", sans-serif`;
+        const text = 'ET';
+        const m = ctx.measureText(text);
+        ctx.fillText(text, (size - m.width) / 2, 12);
+      }
+    }
+
+    function roundRect(ctx, x, y, w, h, r) {
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.lineTo(x + w - r, y);
+      ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+      ctx.lineTo(x + w, y + h - r);
+      ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+      ctx.lineTo(x + r, y + h);
+      ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+      ctx.lineTo(x, y + r);
+      ctx.quadraticCurveTo(x, y, x + r, y);
+      ctx.closePath();
+    }
+
+    const container = document.getElementById('icons');
+
+    sizes.forEach(size => {
+      const box = document.createElement('div');
+      box.className = 'icon-box';
+
+      const canvas = document.createElement('canvas');
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext('2d');
+      drawIcon(ctx, size);
+
+      const label = document.createElement('p');
+      label.textContent = `icon${size}.png (${size}x${size})`;
+
+      const link = document.createElement('a');
+      link.textContent = 'Download';
+      link.download = `icon${size}.png`;
+      link.href = canvas.toDataURL('image/png');
+
+      box.appendChild(canvas);
+      box.appendChild(label);
+      box.appendChild(link);
+      container.appendChild(box);
+    });
+  </script>
+</body>
+</html>

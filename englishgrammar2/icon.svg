@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#1e40af"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#60a5fa"/>
+      <stop offset="100%" stop-color="#93c5fd"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Rounded square background -->
+  <rect x="4" y="4" width="120" height="120" rx="26" ry="26" fill="url(#bg)"/>
+
+  <!-- Subtle inner shadow -->
+  <rect x="4" y="4" width="120" height="120" rx="26" ry="26" fill="none" stroke="#1d4ed8" stroke-width="1" opacity="0.5"/>
+
+  <!-- Book/page shape (subtle background element) -->
+  <path d="M28 88 L28 36 Q28 32 32 32 L72 32 Q74 32 74 34 L74 78 Q74 80 72 80 L36 80 Q32 80 32 84 L32 88 Q32 92 36 92 L74 92"
+        fill="none" stroke="#ffffff" stroke-width="2.5" opacity="0.15" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- "E" letter -->
+  <text x="27" y="88" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="62" font-weight="900" fill="#ffffff" letter-spacing="-2">E</text>
+
+  <!-- "T" letter -->
+  <text x="64" y="88" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="62" font-weight="900" fill="#ffffff" letter-spacing="-2">T</text>
+
+  <!-- SVOCA underline accent bar -->
+  <rect x="26" y="94" width="76" height="4" rx="2" fill="url(#accent)" opacity="0.9"/>
+
+  <!-- Three small grammar dots (representing S V O) -->
+  <circle cx="42" cy="104" r="3" fill="#60a5fa" opacity="0.7"/>
+  <circle cx="64" cy="104" r="3" fill="#f87171" opacity="0.7"/>
+  <circle cx="86" cy="104" r="3" fill="#4ade80" opacity="0.7"/>
+</svg>

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>에스보냥 (SVOCAt) — 시작하기</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: #f8fafc;
+      color: #1e293b;
+      line-height: 1.6;
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    /* ── 히어로 ── */
+    .hero {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .hero-logo {
+      width: 72px; height: 72px;
+      background: #1e40af;
+      border-radius: 18px;
+      display: inline-flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+    }
+    .hero-logo img { width: 48px; height: 48px; }
+    .hero h1 {
+      font-size: 28px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 8px;
+    }
+    .hero-tagline {
+      font-size: 16px;
+      color: #475569;
+      max-width: 540px;
+      margin: 0 auto;
+    }
+
+    /* ── 섹션 ── */
+    section {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 28px 32px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    section h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 20px;
+    }
+
+    /* ── 프로바이더 카드 ── */
+    .provider {
+      border: 1.5px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 18px 20px;
+      margin-bottom: 14px;
+    }
+    .provider.recommended {
+      border-color: #bfdbfe;
+      background: #eff6ff;
+    }
+    .provider-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+    .provider-header h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.02em;
+    }
+    .badge-free { background: #dcfce7; color: #15803d; }
+    .badge-quality { background: #fef3c7; color: #a16207; }
+    .provider-subtitle {
+      font-size: 13px;
+      color: #64748b;
+      margin-bottom: 12px;
+    }
+    .provider ol {
+      margin-left: 20px;
+      margin-bottom: 14px;
+      font-size: 14px;
+      color: #334155;
+    }
+    .provider ol li {
+      margin-bottom: 4px;
+    }
+    .btn-link {
+      display: inline-block;
+      padding: 8px 16px;
+      background: #2563eb;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 7px;
+      font-size: 14px;
+      font-weight: 600;
+      transition: background 0.15s;
+    }
+    .btn-link:hover { background: #1d4ed8; }
+    .btn-link.secondary {
+      background: #fff;
+      color: #2563eb;
+      border: 1.5px solid #2563eb;
+    }
+    .btn-link.secondary:hover { background: #eff6ff; }
+
+    /* ── 고급자 안내 ── */
+    .advanced-note {
+      font-size: 13px;
+      color: #64748b;
+      background: #f8fafc;
+      border-left: 3px solid #cbd5e1;
+      padding: 10px 14px;
+      margin-top: 8px;
+      border-radius: 0 6px 6px 0;
+    }
+    .advanced-note strong { color: #334155; }
+
+    /* ── 입력 섹션 ── */
+    .form-row {
+      margin-bottom: 16px;
+    }
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 6px;
+    }
+    input[type=text], select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1.5px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.15s;
+      background: #fff;
+    }
+    input[type=text] { font-family: monospace; }
+    input[type=text]:focus, select:focus { border-color: #2563eb; }
+    select { cursor: pointer; }
+    .form-hint { font-size: 12px; color: #6b7280; margin-top: 6px; }
+
+    button#save-btn {
+      width: 100%;
+      padding: 12px;
+      background: #2563eb;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background 0.15s;
+    }
+    button#save-btn:hover { background: #1d4ed8; }
+
+    #status {
+      margin-top: 12px;
+      padding: 10px 14px;
+      border-radius: 7px;
+      font-size: 13px;
+      text-align: center;
+      display: none;
+    }
+    #status.ok { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+    #status.err { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+
+    /* ── 성공 상태 ── */
+    .success-box {
+      text-align: center;
+      padding: 40px 32px;
+    }
+    .success-box h2 {
+      font-size: 22px;
+      color: #15803d;
+      margin-bottom: 12px;
+    }
+    .success-box p {
+      font-size: 15px;
+      color: #475569;
+      margin-bottom: 8px;
+    }
+    .success-tip {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 8px;
+      padding: 14px;
+      margin-top: 20px;
+      font-size: 13px;
+      color: #166534;
+    }
+
+    /* ── 푸터 ── */
+    .footer {
+      text-align: center;
+      font-size: 12px;
+      color: #94a3b8;
+      margin-top: 32px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- ── 히어로 ── -->
+    <header class="hero">
+      <div class="hero-logo">
+        <img src="icons/icon48.png" alt="SVOCAt">
+      </div>
+      <h1>에스보냥에 오신 걸 환영합니다</h1>
+      <p class="hero-tagline">
+        영어 문장을 드래그하면 SVOCA 구조로 분석하고 한국어로 번역합니다.<br>
+        시작하려면 AI API 키를 발급받아 아래에 붙여넣어 주세요.
+      </p>
+    </header>
+
+    <!-- ── 프로바이더 안내 ── -->
+    <section id="setup-section">
+      <h2>1. Google Gemini API 키 발급</h2>
+
+      <div class="provider recommended">
+        <div class="provider-header">
+          <h3>Google Gemini</h3>
+          <span class="badge badge-quality">권장</span>
+        </div>
+        <p class="provider-subtitle">한국어 품질 최상 · 무료 할당량 제공 · 약 2분 소요</p>
+        <ol>
+          <li>Google 계정으로 로그인</li>
+          <li>"Get API key" → "Create API key in new project" 선택</li>
+          <li>생성된 키(<code style="font-family:monospace;background:#f1f5f9;padding:1px 5px;border-radius:3px;">AIza...</code>)를 복사해서 아래에 붙여넣기</li>
+        </ol>
+        <a href="https://aistudio.google.com/app/apikey" target="_blank" class="btn-link">Gemini 키 받기 →</a>
+      </div>
+
+      <div style="background:#fffbeb; border-left:3px solid #f59e0b; padding:12px 16px; border-radius:0 8px 8px 0; margin-bottom:14px; font-size:13px; color:#78350f; line-height:1.6;">
+        <strong style="color:#92400e;">과금 주의</strong> — Gemini API는 무료 할당량을 제공하지만 초과 시 Google Cloud 계정에 <strong>과금이 발생할 수 있습니다</strong>.
+        사용량과 결제 설정은 <a href="https://console.cloud.google.com/billing" target="_blank" style="color:#92400e;">Google Cloud Console</a>에서 확인·제한 설정하실 수 있습니다.
+      </div>
+
+      <p class="advanced-note">
+        <strong>고급 사용자</strong>는 <strong>Google Vertex AI</strong> 또는 <strong>Groq</strong> 키(<code>gsk_...</code>)도 붙여넣어 사용할 수 있습니다. 확장이 자동으로 감지합니다.
+      </p>
+    </section>
+
+    <!-- ── 키 입력 ── -->
+    <section id="paste-section">
+      <h2>2. 키 붙여넣기 및 설정</h2>
+
+      <div class="form-row">
+        <label for="api-key">API 키</label>
+        <input type="text" id="api-key" placeholder="AIza..." autocomplete="off" spellcheck="false">
+        <p class="form-hint">키는 기기에만 저장되며 외부로 전송되지 않습니다 (분석 요청 시 Google API에만 직접 전송).</p>
+      </div>
+
+      <div class="form-row">
+        <label for="model">모델 선택</label>
+        <select id="model">
+          <option value="gemini-2.5-flash-lite">Gemini 2.5 Flash Lite (기본 · 가장 빠름)</option>
+          <option value="gemini-2.5-flash">Gemini 2.5 Flash (균형)</option>
+          <option value="gemini-2.5-pro">Gemini 2.5 Pro (가장 정확, 느림)</option>
+        </select>
+        <p class="form-hint">위에서 아래로 갈수록 느리지만 더 정확합니다. 일상 학습은 Flash Lite로 충분합니다.</p>
+      </div>
+
+      <button id="save-btn">시작하기</button>
+      <div id="status"></div>
+    </section>
+
+    <!-- ── 성공 상태 ── -->
+    <section id="success-section" style="display:none">
+      <div class="success-box">
+        <h2>준비 완료</h2>
+        <p id="run-info" style="color:#0f766e; font-weight:600; margin-bottom:14px;"></p>
+        <p>이제 아무 웹페이지에서 영어 문장을 드래그하면</p>
+        <p>"문법 분석" 버튼이 나타납니다.</p>
+        <div class="success-tip">
+          버튼을 클릭하면 사이드패널이 자동으로 열리면서<br>
+          SVOCA 구조 분석과 한국어 번역을 보여줍니다.
+        </div>
+      </div>
+    </section>
+
+    <p class="footer">
+      설정은 언제든 확장 아이콘 클릭 후 기어(⚙) 버튼으로 변경할 수 있습니다.<br>
+      <a href="privacy-policy.html" target="_blank" style="color: #64748b; text-decoration: none;">개인정보 처리방침</a>
+      &nbsp;·&nbsp;
+      <a href="https://github.com/joyof-living/englishgrammar2" target="_blank" style="color: #64748b; text-decoration: none;">GitHub</a>
+    </p>
+  </div>
+
+  <script src="welcome.js"></script>
+</body>
+</html>

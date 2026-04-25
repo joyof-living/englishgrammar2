@@ -1,10 +1,20 @@
 {
   "manifest_version": 3,
-  "name": "ET Grammar",
-  "version": "2.0.0",
-  "description": "영어 문장 SVOCA 다층 드릴다운 분석기",
-  "permissions": ["sidePanel", "activeTab", "storage"],
-  "host_permissions": ["https://generativelanguage.googleapis.com/*"],
+  "name": "에스보냥 (SVOCAt) — SVOCA 영어 문법 분석기",
+  "version": "2.1.0",
+  "description": "영어 문장을 드래그하면 SVOCA 구조로 분석하고 한국어로 번역해주는 문법 학습 도구",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": ["sidePanel", "activeTab", "storage", "tabs", "tabGroups"],
+  "host_permissions": [
+    "https://generativelanguage.googleapis.com/*",
+    "https://aiplatform.googleapis.com/*",
+    "https://api.groq.com/*"
+  ],
   "background": {
     "service_worker": "background.js",
     "type": "module"
@@ -17,7 +27,7 @@
     "default_path": "sidepanel.html"
   },
   "action": {
-    "default_title": "ET Grammar"
+    "default_title": "에스보냥 (SVOCAt)"
   },
   "options_page": "options.html"
 }

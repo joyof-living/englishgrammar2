@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>에스보냥 QA 테스트 #2 — 뉴스 100문장</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      max-width: 860px;
+      margin: 40px auto;
+      padding: 0 24px;
+      line-height: 1.7;
+      color: #1e293b;
+      background: #f8fafc;
+    }
+    h1 {
+      font-size: 24px;
+      color: #0f172a;
+      border-bottom: 2px solid #2563eb;
+      padding-bottom: 10px;
+      margin-bottom: 16px;
+    }
+    h2 {
+      font-size: 16px;
+      color: #1d4ed8;
+      background: #eff6ff;
+      padding: 8px 12px;
+      border-radius: 7px;
+      border-left: 4px solid #2563eb;
+      margin: 28px 0 14px;
+    }
+    .intro {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      padding: 14px 18px;
+      border-radius: 8px;
+      font-size: 14px;
+      color: #78350f;
+      margin-bottom: 28px;
+    }
+    .sentence {
+      background: #fff;
+      padding: 12px 18px;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .sentence:hover { background: #fafbfc; }
+    .num {
+      display: inline-block;
+      min-width: 34px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #94a3b8;
+      background: #f1f5f9;
+      padding: 2px 8px;
+      border-radius: 4px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .text { font-size: 15px; color: #0f172a; }
+    .source-note {
+      font-size: 12px;
+      color: #64748b;
+      margin-top: -8px;
+      margin-bottom: 14px;
+      font-style: italic;
+    }
+    .summary {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #166534;
+      margin-top: 32px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>에스보냥 QA 테스트 페이지 #2 — 뉴스 실문장 100개</h1>
+
+  <div class="intro">
+    <strong>사용법:</strong> 각 문장을 드래그하면 "📖 문법 분석" 버튼이 뜹니다. 순서대로 테스트하며 이상한 결과를 발견하면 번호와 스크린샷으로 기록해주세요.<br>
+    <strong>출처:</strong> CNN (World, Business, Politics, Tech, Sport, Style, Health, Science). 외부 사이트(BBC/Reuters/AP/Guardian/NPR/Yahoo Finance 등)는 Claude Code의 WebFetch 접근이 차단되어 포함하지 못했습니다.<br>
+    <strong>총 100문장</strong> · 발췌 일자: 2026-04-25
+  </div>
+
+  <!-- ═══════════ CNN WORLD ═══════════ -->
+  <h2>CNN World (#1~15)</h2>
+  <p class="source-note">국제 뉴스 · 다양한 구조 (부사절, 분사, 관계절)</p>
+
+  <div class="sentence"><span class="num">1</span><span class="text">US envoys will head to Pakistan on Saturday for fresh Iran talks.</span></div>
+  <div class="sentence"><span class="num">2</span><span class="text">OpenAI's Sam Altman apologizes to Canadian community after failing to flag mass shooter's conversations with its AI chatbot.</span></div>
+  <div class="sentence"><span class="num">3</span><span class="text">The Trump administration has gutted US aid for family planning.</span></div>
+  <div class="sentence"><span class="num">4</span><span class="text">Donald Trump's ire and Russian criticism are helping Giorgia Meloni at home.</span></div>
+  <div class="sentence"><span class="num">5</span><span class="text">Netanyahu reveals he quietly underwent treatment for undisclosed prostate cancer.</span></div>
+  <div class="sentence"><span class="num">6</span><span class="text">France investigates suspected tampering with weather sensors after Polymarket bets.</span></div>
+  <div class="sentence"><span class="num">7</span><span class="text">EU approves a $106 billion loan package to help Ukraine after Hungary lifts its veto.</span></div>
+  <div class="sentence"><span class="num">8</span><span class="text">Lebanese PM accuses Israel of war crimes after strike kills journalist.</span></div>
+  <div class="sentence"><span class="num">9</span><span class="text">Trump claims Iran's regime is fractured.</span></div>
+  <div class="sentence"><span class="num">10</span><span class="text">Italian peacekeepers replace Jesus statue vandalized by Israeli soldiers.</span></div>
+  <div class="sentence"><span class="num">11</span><span class="text">Police in Israel detain Jewish man for kippah showing Israeli, Palestinian flags.</span></div>
+  <div class="sentence"><span class="num">12</span><span class="text">Many African Catholics have greeted Leo's first visit with joy.</span></div>
+  <div class="sentence"><span class="num">13</span><span class="text">Venezuelan economy was promised an economic revival but three months of minimum wage doesn't add up to a single US dollar.</span></div>
+  <div class="sentence"><span class="num">14</span><span class="text">South Korea's air force apologizes after picture-taking pilots caused fighter jet collision.</span></div>
+  <div class="sentence"><span class="num">15</span><span class="text">Shooting of tourists at Mexican pyramids shakes country weeks ahead of World Cup.</span></div>
+
+  <!-- ═══════════ CNN BUSINESS ═══════════ -->
+  <h2>CNN Business (#16~30)</h2>
+  <p class="source-note">경제·산업 뉴스 · 축약형 포함, 비즈니스 용어</p>
+
+  <div class="sentence"><span class="num">16</span><span class="text">Warner Bros. Discovery shareholders approve Paramount takeover.</span></div>
+  <div class="sentence"><span class="num">17</span><span class="text">The S&P 500 has notched four record highs so far this month.</span></div>
+  <div class="sentence"><span class="num">18</span><span class="text">Stocks are at record highs and shrugging off the war with Iran.</span></div>
+  <div class="sentence"><span class="num">19</span><span class="text">Consumer sentiment rebounds slightly after hitting lowest level on record.</span></div>
+  <div class="sentence"><span class="num">20</span><span class="text">Meta to cut 10% of staff as it pours billions into AI.</span></div>
+  <div class="sentence"><span class="num">21</span><span class="text">There are fixes for AI's toll on the power grid.</span></div>
+  <div class="sentence"><span class="num">22</span><span class="text">The Gates Foundation is hiring an investigator to probe its Epstein connections.</span></div>
+  <div class="sentence"><span class="num">23</span><span class="text">White House accuses China of copying American AI models in 'industrial-scale' campaign.</span></div>
+  <div class="sentence"><span class="num">24</span><span class="text">Asia's spiraling supply shock is coming for America.</span></div>
+  <div class="sentence"><span class="num">25</span><span class="text">Trump says he's considering buying Spirit Airlines 'at the right price.'</span></div>
+  <div class="sentence"><span class="num">26</span><span class="text">QVC's parent company files for bankruptcy.</span></div>
+  <div class="sentence"><span class="num">27</span><span class="text">Federal judge blocks politically fraught TV station merger.</span></div>
+  <div class="sentence"><span class="num">28</span><span class="text">Europe tallies the cost of another energy crisis.</span></div>
+  <div class="sentence"><span class="num">29</span><span class="text">The Onion reaches new deal to take over Alex Jones' Infowars.</span></div>
+  <div class="sentence"><span class="num">30</span><span class="text">Powerball is going international in an effort to build larger jackpots that draw more players.</span></div>
+
+  <!-- ═══════════ CNN POLITICS ═══════════ -->
+  <h2>CNN Politics (#31~45)</h2>
+  <p class="source-note">정치 뉴스 · 분사구, 관계절 자주 등장</p>
+
+  <div class="sentence"><span class="num">31</span><span class="text">US freezes $344 million in cryptocurrency said to be linked to Iran.</span></div>
+  <div class="sentence"><span class="num">32</span><span class="text">Trump's Justice Department is bringing back firing squads for federal executions.</span></div>
+  <div class="sentence"><span class="num">33</span><span class="text">House Ethics Committee pushes for more staff and more authority as misconduct scandals rock Congress.</span></div>
+  <div class="sentence"><span class="num">34</span><span class="text">Stars and Stripes Ombudsman says she was fired after criticizing Hegseth.</span></div>
+  <div class="sentence"><span class="num">35</span><span class="text">DOJ drops criminal probe of Federal Reserve Chair Jerome Powell.</span></div>
+  <div class="sentence"><span class="num">36</span><span class="text">The White House wants to focus 2026 on Democrats.</span></div>
+  <div class="sentence"><span class="num">37</span><span class="text">Josh Shapiro tests his clout in trying to flip US House seats in Pennsylvania.</span></div>
+  <div class="sentence"><span class="num">38</span><span class="text">Trump dismisses Prince Harry's comments on Ukraine ahead of royal visit.</span></div>
+  <div class="sentence"><span class="num">39</span><span class="text">Justice Department reclassifies state-licensed medical marijuana as a less dangerous drug.</span></div>
+  <div class="sentence"><span class="num">40</span><span class="text">Big-name Republicans are balking at Trump taking a stake in Spirit Airlines.</span></div>
+  <div class="sentence"><span class="num">41</span><span class="text">Kalshi prediction site suspends three political candidates for betting on their own races.</span></div>
+  <div class="sentence"><span class="num">42</span><span class="text">Both Iran and US think they're winning the war.</span></div>
+  <div class="sentence"><span class="num">43</span><span class="text">US military developing plans to target Iran's Strait of Hormuz defenses if ceasefire fails.</span></div>
+  <div class="sentence"><span class="num">44</span><span class="text">Trump's effort to bar migrants from claiming asylum at the border rejected, setting up possible Supreme Court showdown.</span></div>
+  <div class="sentence"><span class="num">45</span><span class="text">US special forces soldier arrested after allegedly winning $400,000 on Maduro raid.</span></div>
+
+  <!-- ═══════════ CNN TECH ═══════════ -->
+  <h2>CNN Tech (#46~60)</h2>
+  <p class="source-note">IT·과학기술 뉴스 · AI, 기업 관련 용어</p>
+
+  <div class="sentence"><span class="num">46</span><span class="text">China's AI upstart DeepSeek drops new model.</span></div>
+  <div class="sentence"><span class="num">47</span><span class="text">Apple CEO Tim Cook to step down after more than a decade.</span></div>
+  <div class="sentence"><span class="num">48</span><span class="text">Apple's pick to replace Tim Cook hints at its plans for the AI era.</span></div>
+  <div class="sentence"><span class="num">49</span><span class="text">Florida attorney general launches criminal investigation into ChatGPT maker OpenAI after deadly FSU shooting.</span></div>
+  <div class="sentence"><span class="num">50</span><span class="text">The attack on Sam Altman exposed a dark underbelly of the anti-AI movement.</span></div>
+  <div class="sentence"><span class="num">51</span><span class="text">FanDuel wants to carve a sports niche in the controversial prediction market business.</span></div>
+  <div class="sentence"><span class="num">52</span><span class="text">Black hole collision confirms decades-old predictions by Einstein and Hawking.</span></div>
+  <div class="sentence"><span class="num">53</span><span class="text">Rock discovery contains 'clearest sign' yet of ancient life on Mars, NASA says.</span></div>
+  <div class="sentence"><span class="num">54</span><span class="text">Rare 'tooth-in-eye' surgery restores man's vision after two decades.</span></div>
+  <div class="sentence"><span class="num">55</span><span class="text">Trump will return to a dinner celebrating the press corps he often attacks.</span></div>
+  <div class="sentence"><span class="num">56</span><span class="text">Tech companies continue expanding their influence across multiple business sectors and markets worldwide.</span></div>
+  <div class="sentence"><span class="num">57</span><span class="text">Microsoft to offer voluntary retirement to thousands of US employees for the first time.</span></div>
+  <div class="sentence"><span class="num">58</span><span class="text">Consumer sentiment rebounds slightly after hitting lowest level on record.</span></div>
+  <div class="sentence"><span class="num">59</span><span class="text">Jeanine Pirro drops criminal probe of Jerome Powell.</span></div>
+  <div class="sentence"><span class="num">60</span><span class="text">Owners vs. renters: The political battle over America's single-family homes is intensifying nationwide.</span></div>
+
+  <!-- ═══════════ CNN SPORT ═══════════ -->
+  <h2>CNN Sport (#61~72)</h2>
+  <p class="source-note">스포츠 뉴스 · 축약형, 인용문, 숫자 표현</p>
+
+  <div class="sentence"><span class="num">61</span><span class="text">World Cup final tickets now reselling for over $2 million each.</span></div>
+  <div class="sentence"><span class="num">62</span><span class="text">Jim Furyk is returning as US Ryder Cup captain for 2027, AP sources say.</span></div>
+  <div class="sentence"><span class="num">63</span><span class="text">Patriots back Mike Vrabel after New York Post publishes more photos of him with Dianna Russini.</span></div>
+  <div class="sentence"><span class="num">64</span><span class="text">Las Vegas Raiders select Fernando Mendoza with the first overall pick in 2026 NFL draft.</span></div>
+  <div class="sentence"><span class="num">65</span><span class="text">Liam Rosenior fired as Chelsea manager after dreadful run and less than 4 months in job.</span></div>
+  <div class="sentence"><span class="num">66</span><span class="text">$13 train fare spikes to $150 for World Cup fans attending matches in New Jersey.</span></div>
+  <div class="sentence"><span class="num">67</span><span class="text">Teen sprint sensation Gout Gout just eclipsed one of Usain Bolt's records.</span></div>
+  <div class="sentence"><span class="num">68</span><span class="text">Sports power couple Sue Bird and Megan Rapinoe are breaking up.</span></div>
+  <div class="sentence"><span class="num">69</span><span class="text">Men caught competing in women's category of prestigious South African marathon.</span></div>
+  <div class="sentence"><span class="num">70</span><span class="text">Defending champion John Korir breaks Boston Marathon record and Sharon Lokedi also repeats.</span></div>
+  <div class="sentence"><span class="num">71</span><span class="text">Ukrainian athlete barred from Olympics over helmet.</span></div>
+  <div class="sentence"><span class="num">72</span><span class="text">George Russell hopes 2026 won't be his 'one and only shot' at F1 title.</span></div>
+
+  <!-- ═══════════ CNN STYLE ═══════════ -->
+  <h2>CNN Style (#73~84)</h2>
+  <p class="source-note">문화·예술 뉴스 · 숫자, 고유명사, 인용</p>
+
+  <div class="sentence"><span class="num">73</span><span class="text">This year's US Pavilion at the upcoming Venice Biennale has been plagued by controversies and delays.</span></div>
+  <div class="sentence"><span class="num">74</span><span class="text">A $1 million Picasso has sold for just $117.</span></div>
+  <div class="sentence"><span class="num">75</span><span class="text">He spent $69 million on an NFT.</span></div>
+  <div class="sentence"><span class="num">76</span><span class="text">Five years on, he believes in digital art more than ever.</span></div>
+  <div class="sentence"><span class="num">77</span><span class="text">This artist has made millions of dollars.</span></div>
+  <div class="sentence"><span class="num">78</span><span class="text">A forgotten archive of art school applications tells the stories of young Jews fleeing the Nazis.</span></div>
+  <div class="sentence"><span class="num">79</span><span class="text">Banksy has been unmasked.</span></div>
+  <div class="sentence"><span class="num">80</span><span class="text">K-pop phenomenon BTS returns with first concert in years.</span></div>
+  <div class="sentence"><span class="num">81</span><span class="text">A blockbuster exhibition explores how surrealist designer Elsa Schiaparelli redefined fashion.</span></div>
+  <div class="sentence"><span class="num">82</span><span class="text">Incredible images from the Sony World Photography Awards 2026 unveiled.</span></div>
+  <div class="sentence"><span class="num">83</span><span class="text">Jim Carrey, Leonardo DiCaprio and how the double standard of male aging may be over.</span></div>
+  <div class="sentence"><span class="num">84</span><span class="text">Kinky rubber tables and spikes will make you rethink how you style your home.</span></div>
+
+  <!-- ═══════════ CNN HEALTH ═══════════ -->
+  <h2>CNN Health (#85~92)</h2>
+  <p class="source-note">건강·의학 뉴스 · 수동태, 조건절</p>
+
+  <div class="sentence"><span class="num">85</span><span class="text">Ibogaine is drawing new interest from the Trump administration.</span></div>
+  <div class="sentence"><span class="num">86</span><span class="text">The HPV vaccine can reduce certain cancers by half.</span></div>
+  <div class="sentence"><span class="num">87</span><span class="text">Bangor, Maine, is the lone city on the American Lung Association's cleanest air list.</span></div>
+  <div class="sentence"><span class="num">88</span><span class="text">After a year of turmoil, cancer researchers see promising signs for mRNA vaccines.</span></div>
+  <div class="sentence"><span class="num">89</span><span class="text">FDA approves first gene therapy for inherited deafness, shown to restore hearing for children with rare condition.</span></div>
+  <div class="sentence"><span class="num">90</span><span class="text">One type of exercise can cut your risk of developing 8 diseases.</span></div>
+  <div class="sentence"><span class="num">91</span><span class="text">Ultraprocessed foods are turning human thighs into well-marbled steaks.</span></div>
+  <div class="sentence"><span class="num">92</span><span class="text">Eating more plants linked to lower risk of dementia, even in older age.</span></div>
+
+  <!-- ═══════════ CNN SCIENCE ═══════════ -->
+  <h2>CNN Science (#93~100)</h2>
+  <p class="source-note">과학 뉴스 · 도치, 복문, 분사구문</p>
+
+  <div class="sentence"><span class="num">93</span><span class="text">Curiosity rover detects building blocks of life in first-ever experiment on Mars.</span></div>
+  <div class="sentence"><span class="num">94</span><span class="text">Giant, 60-foot octopuses were apex predators 100 million years ago, fossil discovery shows.</span></div>
+  <div class="sentence"><span class="num">95</span><span class="text">This small sea area between Europe and Africa is the site of 124 shipwrecks, archaeologists find.</span></div>
+  <div class="sentence"><span class="num">96</span><span class="text">Chimpanzees in Uganda are in a 'civil war,' and researchers are unsure how it will end.</span></div>
+  <div class="sentence"><span class="num">97</span><span class="text">David Attenborough's 'A Gorilla Story' reveals a rare conservation success.</span></div>
+  <div class="sentence"><span class="num">98</span><span class="text">Shakespeare owned a house in London.</span></div>
+  <div class="sentence"><span class="num">99</span><span class="text">An ancient stone staircase seemed to lead nowhere, but now it's revealing the 'lost Pompeii'.</span></div>
+  <div class="sentence"><span class="num">100</span><span class="text">Prehistoric dice suggest that Native Americans may have been gaming since the last ice age.</span></div>
+
+  <div class="summary">
+    <strong>테스트 완료 후:</strong> 이상 증상 보인 문장 번호를 모아서 저에게 공유해주세요. 공통 패턴을 찾아 프롬프트 일괄 개선하겠습니다.
+  </div>
+
+</body>
+</html>

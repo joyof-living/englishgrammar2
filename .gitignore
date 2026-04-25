@@ -1,0 +1,28 @@
+# Claude Code 로컬 설정
+.claude/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# 편집기
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 스토어 패키지 (빌드 산출물)
+*.zip
+dist/
+build/
+
+# 로그
+*.log
+
+# 개발 문서 — docs/ 전체 제외 (단, docs/test/만 git 추적: Cloudflare Pages 배포용)
+docs/*
+!docs/test/
+!docs/test/**

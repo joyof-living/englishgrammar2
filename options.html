@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>ET Grammar — 설정</title>
+  <title>에스보냥 (SVOCAt) — 설정</title>
   <style>
     body {
       font-family: system-ui, -apple-system, sans-serif;
@@ -18,9 +18,9 @@
     }
     .logo-row { display: flex; align-items: center; gap: 10px; margin-bottom: 24px; }
     .logo {
-      width: 36px; height: 36px; background: #1e40af; color: #fff;
+      width: 36px; height: 36px; background: #1e40af;
       border-radius: 9px; display: flex; align-items: center; justify-content: center;
-      font-weight: 900; font-size: 15px;
+      font-size: 22px; line-height: 1;
     }
     h1 { font-size: 18px; font-weight: 700; }
 
@@ -34,6 +34,16 @@
 
     .hint { font-size: 12px; color: #6b7280; margin-top: 6px; }
 
+    .field { margin-top: 16px; }
+
+    select {
+      width: 100%; padding: 9px 12px; border-radius: 7px;
+      border: 1.5px solid #d1d5db; font-size: 14px;
+      outline: none; transition: border-color 0.15s;
+      background: #fff; cursor: pointer;
+    }
+    select:focus { border-color: #2563eb; }
+
     button {
       margin-top: 16px; width: 100%;
       padding: 10px; background: #2563eb; color: #fff;
@@ -41,6 +51,58 @@
       cursor: pointer; transition: background 0.15s;
     }
     button:hover { background: #1d4ed8; }
+
+    .btn-danger {
+      background: #fff; color: #dc2626;
+      border: 1.5px solid #fecaca;
+    }
+    .btn-danger:hover { background: #fef2f2; border-color: #fca5a5; }
+
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      margin-top: 10px;
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 7px;
+      overflow: hidden;
+    }
+    .compare-table th, .compare-table td {
+      padding: 7px 10px;
+      text-align: left;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .compare-table th {
+      background: #f8fafc;
+      font-weight: 700;
+      color: #475569;
+      font-size: 11px;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+    .compare-table td:first-child {
+      font-weight: 600;
+      color: #1e293b;
+    }
+    .compare-table tr:last-child td { border-bottom: none; }
+    .compare-table .grade-high { color: #15803d; font-weight: 600; }
+    .compare-table .grade-mid  { color: #a16207; }
+    .compare-table .grade-low  { color: #94a3b8; }
+
+    .security-note {
+      margin-top: 12px;
+      padding: 10px 12px;
+      background: #f8fafc;
+      border-left: 3px solid #cbd5e1;
+      border-radius: 0 6px 6px 0;
+      font-size: 12px;
+      color: #475569;
+      line-height: 1.55;
+    }
+    .security-note strong { color: #334155; }
+    .security-note a { color: #2563eb; text-decoration: none; }
+    .security-note a:hover { text-decoration: underline; }
 
     #status {
       margin-top: 12px; padding: 8px 12px;
@@ -53,18 +115,99 @@
 <body>
   <div class="card">
     <div class="logo-row">
-      <div class="logo">ET</div>
-      <h1>ET Grammar 설정</h1>
+      <div class="logo">🐱</div>
+      <h1>에스보냥 설정</h1>
     </div>
 
-    <label for="api-key">Gemini API 키</label>
+    <label for="api-key">API 키</label>
     <input type="text" id="api-key" placeholder="AIza..." autocomplete="off" spellcheck="false">
     <p class="hint">
-      Google AI Studio (<a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a>)에서 무료로 발급받을 수 있습니다.
+      <strong>Google AI Studio</strong>에서 <a href="https://aistudio.google.com/app/apikey" target="_blank">API 키를 발급</a>받아 붙여넣으세요 (<code>AIza...</code>로 시작).
+    </p>
+    <p class="hint" style="color:#b45309; background:#fffbeb; border-left:3px solid #f59e0b; padding:8px 12px; border-radius:0 6px 6px 0; margin-top:8px;">
+      ⚠ <strong>과금 주의</strong>: Gemini API는 무료 할당량을 제공하지만 초과 시 <strong>Google Cloud 계정에 과금</strong>될 수 있습니다.
+      사용량·결제 설정은 <a href="https://console.cloud.google.com/billing" target="_blank" style="color:#92400e;">Google Cloud Console</a>에서 관리하세요.
+    </p>
+    <p class="hint" style="margin-top:8px; color:#64748b;">
+      <strong>Google Vertex AI</strong>(<code>AQ...</code>) 또는 <strong>Groq</strong> 키(<code>gsk_...</code>)도 사용할 수 있습니다.
     </p>
 
+    <div class="field">
+      <label for="model">모델 선택</label>
+      <select id="model">
+        <option value="gemini-2.5-flash-lite">Gemini 2.5 Flash Lite (기본 · 가장 빠름)</option>
+        <option value="gemini-2.5-flash">Gemini 2.5 Flash (균형)</option>
+        <option value="gemini-2.5-pro">Gemini 2.5 Pro (가장 정확, 느림)</option>
+      </select>
+      <p class="hint">위에서 아래로 갈수록 느리지만 더 정확합니다. 일상 학습엔 Flash Lite로 충분합니다.</p>
+      <p class="hint" style="color:#64748b; margin-top:4px;">Vertex AI·Groq 키 사용 시 각 플랫폼의 기본 모델이 자동 적용됩니다.</p>
+
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>모델</th>
+            <th>속도</th>
+            <th>정확도</th>
+            <th>비용</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Gemini 2.5 Flash Lite</td>
+            <td class="grade-high">가장 빠름</td>
+            <td class="grade-mid">좋음</td>
+            <td class="grade-high">가장 저렴</td>
+          </tr>
+          <tr>
+            <td>Gemini 2.5 Flash</td>
+            <td class="grade-mid">보통</td>
+            <td class="grade-high">우수</td>
+            <td class="grade-mid">중간</td>
+          </tr>
+          <tr>
+            <td>Gemini 2.5 Pro</td>
+            <td class="grade-low">느림</td>
+            <td class="grade-high">최고</td>
+            <td class="grade-low">비쌈</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="field">
+      <label>표시 모드</label>
+      <div style="display:flex; flex-direction:column; gap:6px; padding:4px 0;">
+        <label style="display:flex; align-items:center; gap:8px; font-weight:400; font-size:14px; cursor:pointer;">
+          <input type="radio" name="displayMode" value="sidepanel" checked> 사이드패널 (기본)
+        </label>
+        <label style="display:flex; align-items:center; gap:8px; font-weight:400; font-size:14px; cursor:pointer;">
+          <input type="radio" name="displayMode" value="tab"> 새 탭 (Claude for Chrome과 호환)
+        </label>
+        <label style="display:flex; align-items:center; gap:8px; font-weight:400; font-size:14px; cursor:pointer;">
+          <input type="radio" name="displayMode" value="popup"> 팝업 창 (별도 창)
+        </label>
+      </div>
+      <p class="hint">다른 확장이 사이드패널을 점유 중일 때 새 탭 또는 팝업 창 모드를 사용하세요. 새 탭 모드는 Claude for Chrome 등 탭 기반 확장과 함께 동작합니다.</p>
+    </div>
+
     <button id="save-btn">저장</button>
+    <button id="delete-btn" class="btn-danger">저장된 키 삭제</button>
     <div id="status"></div>
+
+    <div class="security-note">
+      <strong>완전한 보안을 원한다면:</strong> 여기서 "삭제"는 확장의 저장소에서만 키를 제거합니다.
+      기기의 임시 파일 등에 잠시 잔존할 수 있으므로, 유출이 우려되면 발급처에서 직접 키를 폐기(rotate)하세요.
+      <br>
+      <a href="https://aistudio.google.com/app/apikey" target="_blank">Gemini 키 관리 →</a>
+      &nbsp;·&nbsp;
+      <a href="https://console.groq.com/keys" target="_blank">Groq 키 관리 →</a>
+    </div>
+
+    <p style="margin-top: 20px; text-align: center; font-size: 12px; color: #94a3b8;">
+      <a href="privacy-policy.html" target="_blank" style="color: #64748b;">개인정보 처리방침</a>
+      &nbsp;·&nbsp;
+      <a href="https://github.com/joyof-living/englishgrammar2" target="_blank" style="color: #64748b;">GitHub</a>
+    </p>
   </div>
 
   <script src="options.js"></script>

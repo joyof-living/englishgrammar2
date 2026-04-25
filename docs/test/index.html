@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>에스보냥 (SVOCAt) — QA 테스트 모음</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      color: #1e293b;
+      background: #f8fafc;
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+    }
+
+    /* ── 헤더 ── */
+    header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .logo-row {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+    .logo {
+      width: 56px; height: 56px;
+      background: #1e40af;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 30px;
+    }
+    h1 {
+      font-size: 28px;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+    }
+    .tagline {
+      color: #64748b;
+      font-size: 15px;
+      margin-bottom: 8px;
+    }
+    .meta {
+      font-size: 13px;
+      color: #94a3b8;
+    }
+
+    /* ── 가이드 ── */
+    .guide {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 32px;
+      font-size: 14px;
+      color: #78350f;
+    }
+    .guide strong { color: #92400e; }
+
+    /* ── 카드 그리드 ── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 22px 24px;
+      transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+      position: relative;
+      overflow: hidden;
+      display: block;
+      text-decoration: none;
+      color: inherit;
+    }
+    .card.available {
+      cursor: pointer;
+    }
+    .card.available:hover {
+      transform: translateY(-2px);
+      border-color: #2563eb;
+      box-shadow: 0 8px 16px rgba(37, 99, 235, 0.08);
+    }
+    .card.unavailable {
+      opacity: 0.55;
+      background: #f8fafc;
+      border-style: dashed;
+    }
+    .card-num {
+      font-size: 11px;
+      font-weight: 700;
+      color: #94a3b8;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .card.available .card-num { color: #2563eb; }
+    .card-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #0f172a;
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+    .card-desc {
+      font-size: 13px;
+      color: #64748b;
+      line-height: 1.5;
+    }
+    .card-status {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.04em;
+    }
+    .status-ready { background: #dcfce7; color: #15803d; }
+    .status-soon  { background: #f1f5f9; color: #94a3b8; }
+    .card-arrow {
+      position: absolute;
+      bottom: 16px;
+      right: 20px;
+      font-size: 18px;
+      color: #cbd5e1;
+      transition: color 0.15s, transform 0.15s;
+    }
+    .card.available:hover .card-arrow {
+      color: #2563eb;
+      transform: translateX(4px);
+    }
+
+    /* ── 로딩 ── */
+    .loading {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 40px;
+      color: #94a3b8;
+      font-size: 14px;
+    }
+
+    /* ── 푸터 ── */
+    footer {
+      text-align: center;
+      margin-top: 64px;
+      padding-top: 32px;
+      border-top: 1px solid #e2e8f0;
+      font-size: 13px;
+      color: #94a3b8;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <header>
+      <div class="logo-row">
+        <div class="logo">🐱</div>
+        <h1>에스보냥 (SVOCAt)</h1>
+      </div>
+      <p class="tagline">SVOCA 영어 문법 분석기 — QA 테스트 모음</p>
+      <p class="meta">각 테스트 페이지로 이동해 문장을 드래그하면 분석이 시작됩니다</p>
+    </header>
+
+    <div class="guide">
+      <strong>사용법:</strong> 아래 카드 중 하나를 클릭해 테스트 페이지로 이동하세요. 페이지의 영어 문장을 드래그하면 "📖 문법 분석" 버튼이 뜨고, 클릭 시 사이드패널/팝업으로 결과가 표시됩니다.
+    </div>
+
+    <div class="grid" id="grid">
+      <div class="loading">테스트 페이지 확인 중…</div>
+    </div>
+
+    <footer>
+      에스보냥 (SVOCAt) · Chrome 확장 프로그램 · BYOK (Bring Your Own Key)
+    </footer>
+
+  </div>
+
+  <script>
+    const TOTAL_TESTS = 10;
+
+    async function fetchTestInfo(num) {
+      try {
+        const resp = await fetch(`test${num}.html`);
+        if (!resp.ok) return null;
+        const html = await resp.text();
+
+        const h1Match    = html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
+        const titleMatch = html.match(/<title>([^<]+)<\/title>/i);
+        const introMatch = html.match(/<div class="intro"[^>]*>([\s\S]*?)<\/div>/i);
+
+        let title = (h1Match?.[1] || titleMatch?.[1] || `테스트 ${num}`);
+        title = title.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+
+        let desc = '';
+        if (introMatch) {
+          desc = introMatch[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+          if (desc.length > 90) desc = desc.slice(0, 90) + '…';
+        }
+
+        return { title, desc };
+      } catch {
+        return null;
+      }
+    }
+
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, c => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[c]));
+    }
+
+    function renderCard(num, info) {
+      const isAvail = !!info;
+      const card = document.createElement(isAvail ? 'a' : 'div');
+      card.className = isAvail ? 'card available' : 'card unavailable';
+      if (isAvail) card.href = `test${num}.html`;
+
+      card.innerHTML = `
+        <div class="card-num">Test ${num}</div>
+        <div class="card-title">${isAvail ? escapeHtml(info.title) : `테스트 ${num}`}</div>
+        <div class="card-desc">${isAvail && info.desc ? escapeHtml(info.desc) : '아직 준비되지 않았습니다.'}</div>
+        <span class="card-status ${isAvail ? 'status-ready' : 'status-soon'}">${isAvail ? '준비됨' : '준비 중'}</span>
+        ${isAvail ? '<span class="card-arrow">→</span>' : ''}
+      `;
+      return card;
+    }
+
+    async function loadTests() {
+      const grid = document.getElementById('grid');
+      const promises = [];
+      for (let i = 1; i <= TOTAL_TESTS; i++) promises.push(fetchTestInfo(i));
+      const results = await Promise.all(promises);
+
+      grid.innerHTML = '';
+      results.forEach((info, idx) => {
+        grid.appendChild(renderCard(idx + 1, info));
+      });
+    }
+
+    loadTests();
+  </script>
+</body>
+</html>

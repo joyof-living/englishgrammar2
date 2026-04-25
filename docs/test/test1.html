@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>에스보냥 QA 테스트 페이지</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      max-width: 820px;
+      margin: 40px auto;
+      padding: 0 24px;
+      line-height: 1.7;
+      color: #1e293b;
+      background: #f8fafc;
+    }
+    h1 {
+      font-size: 24px;
+      color: #0f172a;
+      border-bottom: 2px solid #2563eb;
+      padding-bottom: 10px;
+      margin-bottom: 24px;
+    }
+    h2 {
+      font-size: 16px;
+      color: #1d4ed8;
+      background: #eff6ff;
+      padding: 8px 12px;
+      border-radius: 7px;
+      border-left: 4px solid #2563eb;
+      margin: 28px 0 14px;
+    }
+    .sentence-block {
+      background: #fff;
+      padding: 14px 18px;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    .sentence-block .label {
+      font-size: 11px;
+      color: #64748b;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 4px;
+    }
+    .sentence-block .text {
+      font-size: 16px;
+      color: #0f172a;
+    }
+    .sentence-block .note {
+      font-size: 12px;
+      color: #94a3b8;
+      margin-top: 6px;
+    }
+    .intro {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      padding: 14px 18px;
+      border-radius: 8px;
+      font-size: 14px;
+      color: #78350f;
+      margin-bottom: 28px;
+    }
+    .intro strong { color: #92400e; }
+    .difficulty-high { border-left: 4px solid #dc2626; }
+    .difficulty-mid { border-left: 4px solid #f59e0b; }
+    .difficulty-low { border-left: 4px solid #10b981; }
+  </style>
+</head>
+<body>
+
+  <h1>에스보냥 (SVOCAt) QA 테스트 페이지</h1>
+
+  <div class="intro">
+    <strong>테스트 방법:</strong> 각 문장을 드래그(마우스로 선택)하면 "📖 문법 분석" 버튼이 뜹니다.
+    버튼을 클릭해 사이드패널에서 결과를 확인하세요.<br>
+    좌측 색상 막대: <span style="color:#10b981">●</span> 쉬움 /
+    <span style="color:#f59e0b">●</span> 중간 /
+    <span style="color:#dc2626">●</span> 어려움
+  </div>
+
+  <!-- ── 카테고리 1: 단순 문장 ── -->
+  <h2>1. 단순 문장 (S+V+O) — 기본 동작 확인</h2>
+
+  <div class="sentence-block difficulty-low">
+    <div class="label">CNN</div>
+    <div class="text">The Trump administration has gutted US aid for family planning.</div>
+    <div class="note">기대: S(The Trump administration) + V(has gutted) + O(US aid) + A(for family planning)</div>
+  </div>
+
+  <div class="sentence-block difficulty-low">
+    <div class="label">Classic</div>
+    <div class="text">The cat chased the mouse.</div>
+    <div class="note">기대: S + V + O 3청크</div>
+  </div>
+
+  <!-- ── 카테고리 2: 축약형 ── -->
+  <h2>2. 축약형 (it's, won't, they've, etc.) — 확장 분리 검증</h2>
+
+  <div class="sentence-block difficulty-mid">
+    <div class="label">CNN</div>
+    <div class="text">It's a Game of Thrones type of atmosphere.</div>
+    <div class="note">기대: S(it) + V(is) 분리, "it's" 통째로 안 나와야 함</div>
+  </div>
+
+  <div class="sentence-block difficulty-mid">
+    <div class="label">Classic</div>
+    <div class="text">She won't attend the meeting because she's still recovering.</div>
+    <div class="note">기대: won't → will + not 분리, she's → she + is 분리</div>
+  </div>
+
+  <div class="sentence-block difficulty-mid">
+    <div class="label">Classic</div>
+    <div class="text">I'd have told you if I'd known earlier.</div>
+    <div class="note">기대: I'd → I + would/had (맥락 기반 선택), 2번 등장</div>
+  </div>
+
+  <!-- ── 카테고리 3: 직접 인용문 ── -->
+  <h2>3. 직접 인용문 — RULE D 검증</h2>
+
+  <div class="sentence-block difficulty-mid">
+    <div class="label">Classic</div>
+    <div class="text">He said, "Wow!"</div>
+    <div class="note">기대: "Wow!"는 O로 분류 (interjection 아님)</div>
+  </div>
+
+  <div class="sentence-block difficulty-high">
+    <div class="label">Classic (확장 개발 중 주요 테스트 케이스)</div>
+    <div class="text">Sarandos said that while "it is very unusual for a founder to step away from the board of the company after succession," Hastings is "no ordinary founder."</div>
+    <div class="note">기대: O가 전체 that-절로 번들. 드릴다운에서 내부 분해</div>
+  </div>
+
+  <div class="sentence-block difficulty-mid">
+    <div class="label">Classic</div>
+    <div class="text">"Help!" she cried as the door slammed shut.</div>
+    <div class="note">기대: "Help!"는 fronted O, adverb clause "as..."</div>
+  </div>
+
+  <!-- ── 카테고리 4: 관계절 ── -->
+  <h2>4. 관계절 (who/which/that) — BUNDLING 검증</h2>
+
+  <div class="sentence-block difficulty-high">
+    <div class="label">CNN</div>
+    <div class="text">Ukrainian infantry officer Oleksiy Mykhailov, who spent 343 days without leaving the front line, underscores Kyiv's manpower issues.</div>
+    <div class="note">기대: S가 "Ukrainian...front line"까지 (관계절 포함 통째 번들)</div>
+  </div>
+
+  <div class="sentence-block difficulty-mid">
+    <div class="label">CNN</div>
+    <div class="text">Surveillance footage shows the wolf, which went missing after escaping from its enclosure in O-World zoo.</div>
+    <div class="note">기대: O가 "the wolf, which...zoo" 통째 번들</div>
+  </div>
+
+  <!-- ── 카테고리 5: 분사구문 ── -->
+  <h2>5. 분사구문 — 도입부 부사 역할 검증</h2>
+
+  <div class="sentence-block difficulty-mid">
+    <div class="label">Classic</div>
+    <div class="text">Walking down the street, he noticed a suspicious figure.</div>
+    <div class="note">기대: A(Walking down the street) + S(he) + V(noticed) + O</div>
+  </div>
+
+  <div class="sentence-block difficulty-mid">
+    <div class="label">Classic</div>
+    <div class="text">Exhausted from the long journey, the travelers fell asleep immediately.</div>
+    <div class="note">기대: 분사구문이 A로, 드릴다운에서 소문자 v/o/a</div>
+  </div>
+
+  <!-- ── 카테고리 6: 부사절 ── -->
+  <h2>6. 부사절 (because/while/although/if) — RULE C Case 3 검증</h2>
+
+  <div class="sentence-block difficulty-mid">
+    <div class="label">CNN</div>
+    <div class="text">Hundreds of Everest hopefuls are waiting at base camp as glacier blocks route to summit.</div>
+    <div class="note">기대: A(as glacier...summit)를 드릴다운하면 conj(as) + S/V/O 분해</div>
+  </div>
+
+  <div class="sentence-block difficulty-mid">
+    <div class="label">Classic</div>
+    <div class="text">Although it was raining, the children continued to play outside.</div>
+    <div class="note">기대: A(Although it was raining)로 시작하는 구조</div>
+  </div>
+
+  <!-- ── 카테고리 7: that-절 보어 ── -->
+  <h2>7. that-절 보어 — 발화/인지 동사 번들링 검증</h2>
+
+  <div class="sentence-block difficulty-mid">
+    <div class="label">CNN</div>
+    <div class="text">Trump says he will extend ceasefire with Iran until negotiations conclude.</div>
+    <div class="note">기대: O가 "he will extend...conclude" 전체 (implicit that)</div>
+  </div>
+
+  <div class="sentence-block difficulty-high">
+    <div class="label">Classic</div>
+    <div class="text">Scientists believe that climate change is accelerating faster than previously predicted.</div>
+    <div class="note">기대: O가 "that climate change...predicted" 전체 번들. 드릴다운 시 conj(that) + S/V/C</div>
+  </div>
+
+  <!-- ── 카테고리 8: 수동태 ── -->
+  <h2>8. 수동태 — tense/voice 표시 검증</h2>
+
+  <div class="sentence-block difficulty-mid">
+    <div class="label">CNN</div>
+    <div class="text">The strategic Strait of Hormuz was again closed on April 19 in the standoff between Iran and the United States.</div>
+    <div class="note">기대: V 드릴다운 시 voice: "passive" 표시</div>
+  </div>
+
+  <div class="sentence-block difficulty-low">
+    <div class="label">Classic</div>
+    <div class="text">The cake was eaten by the children.</div>
+    <div class="note">기대: V(was eaten) voice: passive, A(by the children)</div>
+  </div>
+
+  <!-- ── 카테고리 9: 도치/강조 ── -->
+  <h2>9. 도치·강조 구문 — 어려운 구조</h2>
+
+  <div class="sentence-block difficulty-high">
+    <div class="label">Classic</div>
+    <div class="text">Not only did he finish the project, but he also received a promotion.</div>
+    <div class="note">기대: 도치 구조 인식, conj(but) 연결 두 절</div>
+  </div>
+
+  <div class="sentence-block difficulty-high">
+    <div class="label">Classic</div>
+    <div class="text">Never before have we seen such a rapid change in technology.</div>
+    <div class="note">기대: "Never before"는 A로, 도치된 V(have seen) 인식</div>
+  </div>
+
+  <!-- ── 카테고리 10: 긴 복문 (뉴스 특유) ── -->
+  <h2>10. 긴 복문 — 뉴스 통합 스트레스 테스트</h2>
+
+  <div class="sentence-block difficulty-high">
+    <div class="label">CNN 스타일</div>
+    <div class="text">A California company has recalled more than 3.1 million bottles of lubricating eye drops because it had not properly tested – and thus could not prove – whether the products were sterile.</div>
+    <div class="note">기대: 메인 S/V/O + 긴 A(because절) + 내부 부사구. 드릴다운 시 점진적 분해</div>
+  </div>
+
+  <div class="sentence-block difficulty-high">
+    <div class="label">Classic + news</div>
+    <div class="text">The committee announced that, despite months of negotiations, the proposal had been rejected by a narrow margin, leaving the future of the initiative uncertain.</div>
+    <div class="note">기대: that-절 번들, 내부에 despite 구, passive, 분사구 "leaving..."</div>
+  </div>
+
+  <!-- ── 카테고리 11: 단어 사전 모드 ── -->
+  <h2>11. 단어 사전 모드 — 단일 단어 선택 검증</h2>
+
+  <div class="sentence-block difficulty-low">
+    <div class="label">Single word</div>
+    <div class="text">serendipity</div>
+    <div class="note">기대: 문장 모드 대신 단어 사전 카드가 표시됨 (word-result 상태)</div>
+  </div>
+
+  <div class="sentence-block difficulty-low">
+    <div class="label">Single word</div>
+    <div class="text">ubiquitous</div>
+    <div class="note">기대: 발음 + 품사 + 한국어 뜻 표시</div>
+  </div>
+
+</body>
+</html>

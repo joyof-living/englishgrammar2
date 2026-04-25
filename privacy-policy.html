@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>에스보냥 (SVOCAt) — 개인정보 처리방침</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: #f8fafc;
+      color: #1e293b;
+      line-height: 1.65;
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
+
+    .container { max-width: 760px; margin: 0 auto; }
+
+    .header {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 24px 32px;
+      margin-bottom: 20px;
+    }
+    .header h1 {
+      font-size: 22px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 4px;
+    }
+    .header .sub {
+      font-size: 14px;
+      color: #64748b;
+    }
+    .header .meta {
+      font-size: 12px;
+      color: #94a3b8;
+      margin-top: 10px;
+    }
+
+    .section {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 24px 32px;
+      margin-bottom: 16px;
+    }
+    .section h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .section h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #334155;
+      margin: 16px 0 8px;
+    }
+    .section p {
+      font-size: 14px;
+      color: #334155;
+      margin-bottom: 10px;
+    }
+    .section ul, .section ol {
+      margin-left: 22px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      color: #334155;
+    }
+    .section li { margin-bottom: 4px; }
+
+    .summary {
+      background: #eff6ff;
+      border: 1.5px solid #bfdbfe;
+    }
+    .summary h2 { color: #1d4ed8; border: none; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin: 12px 0;
+    }
+    th, td {
+      text-align: left;
+      padding: 8px 10px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    th {
+      background: #f8fafc;
+      font-weight: 700;
+      font-size: 12px;
+      color: #475569;
+    }
+    td code {
+      font-family: monospace;
+      background: #f1f5f9;
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .lang-section {
+      background: #f8fafc;
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 16px;
+    }
+    .lang-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: #64748b;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 12px;
+      color: #94a3b8;
+      margin-top: 24px;
+      padding-bottom: 40px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <div class="header">
+      <h1>개인정보 처리방침 / Privacy Policy</h1>
+      <div class="sub">에스보냥 (SVOCAt) — SVOCA 영어 문법 분석기</div>
+      <div class="meta">최종 수정일 / Last Updated: 2026-04-18 · 버전 / Version: 2.1.0</div>
+    </div>
+
+    <div class="section summary">
+      <h2>요약 / Summary</h2>
+      <ul>
+        <li>본 확장은 사용자의 개인정보를 <strong>수집하지 않으며</strong>, 개발자 소유의 서버로 전송하지 않습니다.</li>
+        <li>모든 설정은 사용자의 <strong>브라우저 로컬 저장소</strong>에만 보관됩니다.</li>
+        <li>분석 요청은 사용자가 선택한 AI 제공사로 <strong>직접</strong> 전송됩니다.</li>
+      </ul>
+    </div>
+
+    <div class="lang-section">
+      <div class="lang-label">한국어</div>
+
+      <div class="section">
+        <h2>1. 수집하는 정보</h2>
+        <p>본 확장은 다음 정보만을 사용자로부터 입력받으며, 모두 <code>chrome.storage.local</code>에 저장됩니다:</p>
+        <table>
+          <thead>
+            <tr><th>항목</th><th>설명</th><th>저장 위치</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>API 키</td><td>Google Gemini, Groq, Vertex AI 등</td><td><code>chrome.storage.local</code></td></tr>
+            <tr><td>모델 선택</td><td>분석에 사용할 AI 모델</td><td><code>chrome.storage.local</code></td></tr>
+            <tr><td>분석 히스토리</td><td>최근 분석 문장/결과 (최대 10건)</td><td><code>chrome.storage.local</code></td></tr>
+          </tbody>
+        </table>
+        <p>이메일, 이름, 위치 등 <strong>개인 식별 정보는 수집하지 않습니다</strong>.</p>
+      </div>
+
+      <div class="section">
+        <h2>2. 정보의 사용</h2>
+        <ul>
+          <li><strong>API 키</strong>: 사용자가 텍스트 분석을 요청할 때, 사용자가 선택한 AI 제공사의 API 엔드포인트로만 전송됩니다.</li>
+          <li><strong>선택한 텍스트</strong>: 동일한 AI 제공사로 전송되어 문법 분석과 번역에 사용됩니다.</li>
+          <li><strong>분석 히스토리</strong>: 사이드패널의 "최근 분석" 기능을 위해 로컬에만 보관됩니다.</li>
+          <li>개발자는 이 정보에 <strong>접근할 수 없습니다</strong>.</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>3. 외부 서비스 (제3자 제공)</h2>
+        <p>선택한 텍스트는 사용자가 선택한 다음 AI 제공사 중 하나로 전송됩니다:</p>
+        <table>
+          <thead>
+            <tr><th>제공사</th><th>엔드포인트</th><th>개인정보처리방침</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Google (Gemini)</td>
+              <td><code>generativelanguage.googleapis.com</code></td>
+              <td><a href="https://policies.google.com/privacy" target="_blank">링크</a></td>
+            </tr>
+            <tr>
+              <td>Google (Vertex AI)</td>
+              <td><code>aiplatform.googleapis.com</code></td>
+              <td><a href="https://cloud.google.com/terms/cloud-privacy-notice" target="_blank">링크</a></td>
+            </tr>
+            <tr>
+              <td>Groq</td>
+              <td><code>api.groq.com</code></td>
+              <td><a href="https://groq.com/privacy-policy" target="_blank">링크</a></td>
+            </tr>
+          </tbody>
+        </table>
+        <p>각 제공사의 약관이 해당 전송에 적용됩니다. 본 확장은 <strong>단순 중계자</strong>이며 전송 내용을 열람·저장·가공하지 않습니다.</p>
+      </div>
+
+      <div class="section">
+        <h2>4. 쿠키 및 추적</h2>
+        <ul>
+          <li>쿠키를 사용하지 않습니다.</li>
+          <li>사용자 활동을 추적하지 않습니다 (click/scroll/usage telemetry 없음).</li>
+          <li>Google Analytics, Mixpanel 등 분석 도구를 포함하지 않습니다.</li>
+          <li>광고/마케팅 목적의 정보 수집을 하지 않습니다.</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>5. 데이터 저장 및 삭제</h2>
+        <ul>
+          <li>모든 데이터는 브라우저 로컬 저장소에만 저장됩니다.</li>
+          <li>확장 제거 시 관련 데이터가 함께 삭제됩니다.</li>
+          <li><strong>개별 삭제</strong>: 옵션 페이지의 "저장된 키 삭제" 버튼</li>
+          <li><strong>완전한 보안</strong>: 삭제 후 잔존 데이터가 우려되면 발급처(Groq/Google)에서 API 키를 직접 폐기(rotate)하세요.</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>6. 보안</h2>
+        <ul>
+          <li>API 키는 Chrome의 자체 암호화 정책에 따라 저장됩니다.</li>
+          <li>AI 제공사와의 통신은 HTTPS로만 이루어집니다.</li>
+          <li>기기 도난 위험 방지를 위해 OS 수준 암호화(BitLocker/FileVault)를 권장합니다.</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>7. 어린이 / 변경 / 연락</h2>
+        <p><strong>어린이</strong>: 본 확장은 만 13세 미만 어린이를 대상으로 하지 않습니다.</p>
+        <p><strong>변경 사항</strong>: 본 방침은 향후 수정될 수 있으며, 중요 변경사항은 확장 업데이트 릴리스 노트에 공지됩니다.</p>
+        <p><strong>연락</strong>: <a href="https://github.com/joyof-living/englishgrammar2/issues" target="_blank">GitHub Issues</a>를 통해 전달해주세요.</p>
+      </div>
+    </div>
+
+    <div class="lang-section">
+      <div class="lang-label">English</div>
+
+      <div class="section">
+        <h2>1. Data We Collect</h2>
+        <p>The extension stores only the following, all in <code>chrome.storage.local</code>:</p>
+        <ul>
+          <li><strong>API Key</strong> — for Google Gemini, Groq, or Vertex AI</li>
+          <li><strong>Model Selection</strong> — chosen AI model for analysis</li>
+          <li><strong>Analysis History</strong> — up to 10 recent analyses</li>
+        </ul>
+        <p>We do <strong>not collect</strong> emails, names, locations, or other personally identifiable information.</p>
+      </div>
+
+      <div class="section">
+        <h2>2. How Information Is Used</h2>
+        <ul>
+          <li>API key and selected text are sent only to the AI provider chosen by the user.</li>
+          <li>Analysis history is stored locally only, for the "Recent Analyses" feature.</li>
+          <li>The developer <strong>has no access</strong> to any of this data.</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>3. Third-Party Services</h2>
+        <p>When requesting analysis, the selected text is sent to one of: Google (Gemini/Vertex AI) or Groq. Each provider's privacy policy applies. This extension is merely a relay; it does not read, store, or process the text content on its own servers (it has none).</p>
+      </div>
+
+      <div class="section">
+        <h2>4. Cookies, Tracking, Analytics</h2>
+        <p>None. No cookies, no tracking, no analytics tools (Google Analytics, Mixpanel, etc.), no advertising.</p>
+      </div>
+
+      <div class="section">
+        <h2>5. Data Deletion</h2>
+        <ul>
+          <li>Uninstalling the extension removes all data.</li>
+          <li>Use the "Delete saved key" button in options to remove the API key.</li>
+          <li>For complete security, rotate your API key at the provider (Groq / Google).</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>6. Security, Children, Changes, Contact</h2>
+        <p><strong>Security</strong>: HTTPS-only communication; API keys stored per Chrome's own encryption policy.</p>
+        <p><strong>Children</strong>: Not directed at children under 13.</p>
+        <p><strong>Changes</strong>: Policy may be updated; check the "Last Updated" date above.</p>
+        <p><strong>Contact</strong>: <a href="https://github.com/joyof-living/englishgrammar2/issues" target="_blank">GitHub Issues</a>.</p>
+      </div>
+    </div>
+
+    <p class="footer">이 문서는 에스보냥 (SVOCAt) v2.1.0에 적용됩니다.</p>
+  </div>
+</body>
+</html>

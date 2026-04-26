@@ -2,7 +2,7 @@
 
 *Privacy Policy for SVOCAt Chrome Extension*
 
-**최종 수정일 / Last Updated**: 2026-04-18
+**최종 수정일 / Last Updated**: 2026-04-26
 **버전 / Version**: 2.1.0
 
 ---

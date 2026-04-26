@@ -24,7 +24,7 @@
     "js": ["content.js"]
   }],
   "side_panel": {
-    "default_path": "sidepanel.html"
+    "default_path": "sidepanel-v2.html"
   },
   "action": {
     "default_title": "에스보냥 (SVOCAt)"

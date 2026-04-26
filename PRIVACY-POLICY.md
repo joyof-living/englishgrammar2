@@ -78,8 +78,7 @@
 
 ### 9. 연락처
 
-문의 사항이 있으시면 GitHub 레포지토리의 Issues를 통해 전달해주세요:
-[https://github.com/joyof-living/englishgrammar2/issues](https://github.com/joyof-living/englishgrammar2/issues)
+본 확장은 사용자의 데이터를 수집·저장하지 않으므로 별도 연락 채널을 운영하지 않습니다. 일반 문의는 Chrome 웹 스토어 페이지의 리뷰 또는 "개발자에게 문의" 기능을 이용해주세요.
 
 ---
 
@@ -154,5 +153,4 @@ This policy may be updated from time to time. Significant changes will be announ
 
 ### 9. Contact
 
-For inquiries, please use GitHub Issues:
-[https://github.com/joyof-living/englishgrammar2/issues](https://github.com/joyof-living/englishgrammar2/issues)
+As we collect no user data, no dedicated contact channel is operated. For general inquiries, please use the review or "Contact developer" function on the Chrome Web Store listing.

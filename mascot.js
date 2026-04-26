@@ -139,5 +139,60 @@
     return svg;
   }
 
+  // ─── 앱 아이콘 (라운드 사각형 + 마스코트) ───
+  // 스토어 아이콘, 확장 아이콘 PNG 생성용
+  function createMascotIcon({ size = 128 } = {}) {
+    const bgId = nextId();
+    const ringId = nextId();
+
+    const svg = createSvgEl('svg', {
+      viewBox: '0 0 128 128',
+      width: size, height: size,
+      xmlns: SVG_NS,
+    });
+
+    const defs = createSvgEl('defs');
+
+    const bgGrad = createSvgEl('linearGradient', { id: bgId, x1: '0', y1: '0', x2: '1', y2: '1' });
+    bgGrad.appendChild(createSvgEl('stop', { offset: '0%',   'stop-color': 'oklch(0.97 0.01 75)' }));
+    bgGrad.appendChild(createSvgEl('stop', { offset: '100%', 'stop-color': 'oklch(0.94 0.018 75)' }));
+    defs.appendChild(bgGrad);
+
+    const ringGrad = createSvgEl('linearGradient', { id: ringId, x1: '0', y1: '0', x2: '1', y2: '1' });
+    ringGrad.appendChild(createSvgEl('stop', { offset: '0%',   'stop-color': 'oklch(0.62 0.16 230)' }));
+    ringGrad.appendChild(createSvgEl('stop', { offset: '25%',  'stop-color': 'oklch(0.6 0.2 280)' }));
+    ringGrad.appendChild(createSvgEl('stop', { offset: '55%',  'stop-color': 'oklch(0.65 0.18 25)' }));
+    ringGrad.appendChild(createSvgEl('stop', { offset: '80%',  'stop-color': 'oklch(0.7 0.15 85)' }));
+    ringGrad.appendChild(createSvgEl('stop', { offset: '100%', 'stop-color': 'oklch(0.7 0.15 155)' }));
+    defs.appendChild(ringGrad);
+
+    svg.appendChild(defs);
+
+    // 배경 (라운드 사각형)
+    svg.appendChild(createSvgEl('rect', {
+      x: 0, y: 0, width: 128, height: 128,
+      rx: 28, fill: `url(#${bgId})`,
+    }));
+
+    // 마스코트 그룹 (중앙 + 약간 확대)
+    const g = createSvgEl('g', { transform: 'translate(64 64) scale(1.05)' });
+    g.appendChild(createSvgEl('path', { d: CAT_PATH, fill: `url(#${ringId})` }));
+    g.appendChild(createSvgEl('path', {
+      d: CAT_PATH,
+      fill: 'oklch(0.22 0.04 270)',
+      transform: 'translate(0 4) scale(0.82)',
+    }));
+
+    // 눈
+    const eyeG = createSvgEl('g', { transform: 'translate(0 2) scale(0.82)' });
+    eyeG.appendChild(createSvgEl('ellipse', { cx: -12, cy: 0, rx: '3.4', ry: '4.6', fill: 'white' }));
+    eyeG.appendChild(createSvgEl('ellipse', { cx: 12,  cy: 0, rx: '3.4', ry: '4.6', fill: 'white' }));
+    g.appendChild(eyeG);
+
+    svg.appendChild(g);
+    return svg;
+  }
+
   window.createMascot = createMascot;
+  window.createMascotIcon = createMascotIcon;
 })();

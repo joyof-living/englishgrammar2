@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>에스보냥 (SVOCAt) — 설정</title>
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="settings-v2.css">
+  <style>
+    /* options-v2 전용 보조 스타일 */
+    body {
+      margin: 0;
+      padding: 28px 16px;
+      background: var(--paper-2);
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .settings2-root { max-width: 540px; width: 100%; }
+
+    /* 저장 상태 메시지 */
+    .settings2-status {
+      margin-top: 4px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      line-height: 1.4;
+      display: none;
+      word-break: keep-all;
+    }
+    .settings2-status.ok {
+      background: oklch(0.96 0.05 155);
+      color: oklch(0.4 0.14 155);
+      border: 1px solid oklch(0.82 0.1 155);
+    }
+    .settings2-status.err {
+      background: oklch(0.96 0.05 25);
+      color: oklch(0.5 0.18 25);
+      border: 1px solid oklch(0.82 0.1 25);
+    }
+
+    /* 빈 마스코트 컨테이너에 SVG 주입할 위치 */
+    .settings2-mascot { display: inline-flex; align-items: center; }
+  </style>
+</head>
+<body>
+  <div class="settings2-root">
+
+    <header class="settings2-header">
+      <div class="settings2-brand">
+        <div class="settings2-mascot" id="header-mascot"></div>
+        <div>
+          <div class="settings2-name">에스보냥 설정</div>
+          <div class="settings2-sub en">SVOCAt · settings</div>
+        </div>
+      </div>
+    </header>
+
+    <div class="settings2-body">
+
+      <!-- API 키 -->
+      <section class="settings2-section">
+        <div class="settings2-section-head">
+          <h3>API 키</h3>
+          <span class="settings2-required">필수</span>
+        </div>
+
+        <div class="settings2-input-wrap">
+          <input
+            type="password"
+            id="api-key"
+            class="settings2-input"
+            placeholder="AIza..."
+            autocomplete="off"
+            spellcheck="false">
+          <span class="settings2-input-status" id="api-key-status"></span>
+        </div>
+
+        <p class="settings2-hint">
+          <a class="settings2-link" href="https://aistudio.google.com/app/apikey" target="_blank">Google AI Studio</a>에서 API 키를 발급받아 붙여넣으세요. <code class="settings2-code">AIza...</code>로 시작합니다.
+        </p>
+
+        <!-- 과금 주의 -->
+        <div class="settings2-warn" id="warn-banner">
+          <div class="settings2-warn-icon">⚠</div>
+          <div class="settings2-warn-body">
+            <div class="settings2-warn-title">과금 주의</div>
+            <div class="settings2-warn-text">
+              Gemini API는 무료 할당량을 제공하지만 초과 시 <strong>Google Cloud 계정</strong>에 과금될 수 있습니다.
+              사용량·결제 설정은 <a class="settings2-link" href="https://console.cloud.google.com/billing" target="_blank">Google Cloud Console</a>에서 관리하세요.
+            </div>
+          </div>
+          <button class="settings2-warn-close" id="warn-close" type="button" aria-label="닫기">✕</button>
+        </div>
+
+        <!-- 안전 팁 -->
+        <div class="settings2-tip">
+          <div class="settings2-tip-icon">💡</div>
+          <div class="settings2-tip-body">
+            <div class="settings2-tip-title">안전하게 사용하려면</div>
+            <div class="settings2-tip-text">
+              <a class="settings2-link" href="https://aistudio.google.com/app/apikey" target="_blank">Google AI Studio</a>에서 키만 발급받고 <strong>결제수단을 등록하지 마세요</strong>.
+              이 경우 무료 한도(Flash Lite 기준 일일 1,500회)를 넘으면 에러만 반환되고 과금되지 않습니다.
+              Google Cloud Console에서 "Enable Billing"을 누르지 않는 한 안전합니다.
+            </div>
+          </div>
+        </div>
+
+        <p class="settings2-hint settings2-hint-dim">
+          <strong>Google Vertex AI</strong> (<code>AQ...</code>) 또는 <strong>Groq 키</strong> (<code>gsk_...</code>)도 사용할 수 있습니다.
+        </p>
+      </section>
+
+      <!-- 모델 선택 -->
+      <section class="settings2-section">
+        <div class="settings2-section-head">
+          <h3>모델 선택</h3>
+        </div>
+
+        <div class="settings2-select-wrap">
+          <select id="model" class="settings2-select">
+            <option value="gemini-2.5-flash-lite">Gemini 2.5 Flash Lite (기본 · 가장 빠름)</option>
+            <option value="gemini-2.5-flash">Gemini 2.5 Flash (균형)</option>
+            <option value="gemini-2.5-pro">Gemini 2.5 Pro (가장 정확)</option>
+          </select>
+          <div class="settings2-select-arrow">▾</div>
+        </div>
+
+        <p class="settings2-hint">위에서 아래로 갈수록 느리지만 더 정확합니다. 일상 학습엔 Flash Lite로 충분합니다.</p>
+
+        <div class="settings2-vertex-note">
+          Vertex AI · Groq 키 사용 시 각 플랫폼의 기본 모델이 자동 적용됩니다.
+        </div>
+
+        <!-- 비교 테이블 -->
+        <div class="settings2-table" id="model-table">
+          <div class="settings2-table-row settings2-table-head">
+            <div>모델</div>
+            <div>속도</div>
+            <div>정확도</div>
+            <div>비용</div>
+          </div>
+          <div class="settings2-table-row" data-model="gemini-2.5-flash-lite">
+            <div class="settings2-model-name">Gemini 2.5 Flash Lite</div>
+            <div><span class="settings2-pill speed-fast">가장 빠름</span></div>
+            <div><span class="settings2-pill q-good">좋음</span></div>
+            <div><span class="settings2-pill cost-low">가장 저렴</span></div>
+          </div>
+          <div class="settings2-table-row" data-model="gemini-2.5-flash">
+            <div class="settings2-model-name">Gemini 2.5 Flash</div>
+            <div><span class="settings2-pill speed-mid">보통</span></div>
+            <div><span class="settings2-pill q-great">우수</span></div>
+            <div><span class="settings2-pill cost-mid">중간</span></div>
+          </div>
+          <div class="settings2-table-row" data-model="gemini-2.5-pro">
+            <div class="settings2-model-name">Gemini 2.5 Pro</div>
+            <div><span class="settings2-pill speed-slow">느림</span></div>
+            <div><span class="settings2-pill q-best">최고</span></div>
+            <div><span class="settings2-pill cost-high">비쌈</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 표시 모드 -->
+      <section class="settings2-section">
+        <div class="settings2-section-head">
+          <h3>표시 모드</h3>
+        </div>
+
+        <div class="settings2-radio-group" id="mode-group">
+          <label class="settings2-mode" data-mode="sidepanel">
+            <input type="radio" name="displayMode" value="sidepanel" checked>
+            <div class="settings2-mode-radio"><div class="settings2-mode-radio-dot"></div></div>
+            <div class="settings2-mode-icon">
+              <svg viewBox="0 0 32 24" width="32" height="24" fill="none">
+                <rect x="0.5" y="0.5" width="31" height="23" rx="3" stroke="currentColor" stroke-width="1.2"/>
+                <line x1="20" y1="0.5" x2="20" y2="23.5" stroke="currentColor" stroke-width="1.2"/>
+                <rect x="22" y="3" width="8" height="2" rx="0.5" fill="currentColor" opacity="0.6"/>
+                <rect x="22" y="7" width="6" height="2" rx="0.5" fill="currentColor" opacity="0.4"/>
+                <rect x="22" y="11" width="7" height="2" rx="0.5" fill="currentColor" opacity="0.4"/>
+              </svg>
+            </div>
+            <div class="settings2-mode-text">
+              <div class="settings2-mode-title">사이드패널 <span class="settings2-mode-meta">· 현재 창</span></div>
+              <div class="settings2-mode-desc">브라우징을 방해하지 않는 보조 창</div>
+            </div>
+          </label>
+
+          <label class="settings2-mode" data-mode="tab">
+            <input type="radio" name="displayMode" value="tab">
+            <div class="settings2-mode-radio"><div class="settings2-mode-radio-dot"></div></div>
+            <div class="settings2-mode-icon">
+              <svg viewBox="0 0 32 24" width="32" height="24" fill="none">
+                <rect x="0.5" y="3.5" width="31" height="20" rx="3" stroke="currentColor" stroke-width="1.2"/>
+                <rect x="3" y="0.5" width="9" height="4" rx="1.5" stroke="currentColor" stroke-width="1.2" fill="var(--brand-soft)"/>
+                <rect x="13" y="0.5" width="9" height="4" rx="1.5" stroke="currentColor" stroke-width="1.2" opacity="0.4"/>
+                <rect x="4" y="8" width="24" height="2" rx="0.5" fill="currentColor" opacity="0.4"/>
+                <rect x="4" y="12" width="18" height="2" rx="0.5" fill="currentColor" opacity="0.3"/>
+              </svg>
+            </div>
+            <div class="settings2-mode-text">
+              <div class="settings2-mode-title">새 탭 <span class="settings2-mode-meta">· 별도 탭</span></div>
+              <div class="settings2-mode-desc">넓은 화면에서 자세히 보기</div>
+            </div>
+          </label>
+
+          <label class="settings2-mode" data-mode="popup">
+            <input type="radio" name="displayMode" value="popup">
+            <div class="settings2-mode-radio"><div class="settings2-mode-radio-dot"></div></div>
+            <div class="settings2-mode-icon">
+              <svg viewBox="0 0 32 24" width="32" height="24" fill="none">
+                <rect x="0.5" y="0.5" width="22" height="16" rx="2" stroke="currentColor" stroke-width="1.2" opacity="0.4"/>
+                <rect x="9.5" y="6.5" width="22" height="16" rx="2" stroke="currentColor" stroke-width="1.2" fill="var(--paper)"/>
+                <rect x="12" y="9" width="14" height="2" rx="0.5" fill="currentColor" opacity="0.5"/>
+                <rect x="12" y="13" width="10" height="2" rx="0.5" fill="currentColor" opacity="0.3"/>
+              </svg>
+            </div>
+            <div class="settings2-mode-text">
+              <div class="settings2-mode-title">팝업 창 <span class="settings2-mode-meta">· 별도 창</span></div>
+              <div class="settings2-mode-desc">다른 창과 겹쳐 띄우기</div>
+            </div>
+          </label>
+        </div>
+
+        <p class="settings2-hint">
+          다른 확장이 사이드패널을 점유 중일 때 새 탭 또는 팝업 창 모드를 사용하세요. 새 탭 모드는 탭 기반 확장과 함께 사용하실 수 있습니다.
+        </p>
+      </section>
+
+      <!-- 액션 -->
+      <div class="settings2-actions">
+        <button class="settings2-save" id="save-btn" type="button">
+          <span>저장</span>
+        </button>
+        <button class="settings2-delete" id="delete-btn" type="button">
+          저장된 키 삭제
+        </button>
+        <div class="settings2-status" id="status"></div>
+      </div>
+
+      <!-- 보안 노트 -->
+      <div class="settings2-note">
+        <div class="settings2-note-title">완전한 보안을 원한다면</div>
+        <div class="settings2-note-text">
+          여기서 "삭제"는 확장의 저장소에서만 키를 제거합니다. 기기의 임시 파일 등에 잠시 잔존할 수 있으므로,
+          유출이 우려되면 발급처에서 직접 키를 폐기(rotate)하세요.
+        </div>
+        <div class="settings2-note-links">
+          <a class="settings2-link" href="https://aistudio.google.com/app/apikey" target="_blank">Gemini 키 관리 →</a>
+          <a class="settings2-link" href="https://console.groq.com/keys" target="_blank">Groq 키 관리 →</a>
+        </div>
+      </div>
+
+      <!-- 푸터 -->
+      <footer class="settings2-footer">
+        <a class="settings2-link" href="privacy-policy.html" target="_blank">개인정보 처리방침</a>
+        <span class="settings2-foot-dot">·</span>
+        <a class="settings2-link" href="https://github.com/joyof-living/englishgrammar2" target="_blank">GitHub</a>
+      </footer>
+    </div>
+  </div>
+
+  <script src="mascot.js"></script>
+  <script src="options-v2.js"></script>
+</body>
+</html>

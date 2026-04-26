@@ -18,6 +18,7 @@ Desktop.ini
 *.zip
 dist/
 build/
+package/
 
 # 로그
 *.log

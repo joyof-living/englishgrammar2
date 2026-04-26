@@ -155,19 +155,19 @@
       <div class="lang-label">한국어</div>
 
       <div class="section">
-        <h2>1. 수집하는 정보</h2>
-        <p>본 확장은 다음 정보만을 사용자로부터 입력받으며, 모두 <code>chrome.storage.local</code>에 저장됩니다:</p>
+        <h2>1. 사용자 기기에 저장되는 정보</h2>
+        <p><strong>본 확장은 어떤 사용자 정보도 수집·전송받지 않습니다.</strong> 다음 항목은 사용자 본인의 브라우저 로컬 저장소(<code>chrome.storage.local</code>)에만 저장되며, 개발자 서버나 제3의 장소로 전송되지 않습니다:</p>
         <table>
           <thead>
             <tr><th>항목</th><th>설명</th><th>저장 위치</th></tr>
           </thead>
           <tbody>
-            <tr><td>API 키</td><td>Google Gemini, Groq, Vertex AI 등</td><td><code>chrome.storage.local</code></td></tr>
+            <tr><td>API 키</td><td>Google Gemini, Groq, Vertex AI 등 (사용자가 직접 발급·입력)</td><td><code>chrome.storage.local</code></td></tr>
             <tr><td>모델 선택</td><td>분석에 사용할 AI 모델</td><td><code>chrome.storage.local</code></td></tr>
-            <tr><td>분석 히스토리</td><td>최근 분석 문장/결과 (최대 10건)</td><td><code>chrome.storage.local</code></td></tr>
+            <tr><td>분석 히스토리</td><td>최근 분석 문장/결과 (최대 10건, 로컬 전용)</td><td><code>chrome.storage.local</code></td></tr>
           </tbody>
         </table>
-        <p>이메일, 이름, 위치 등 <strong>개인 식별 정보는 수집하지 않습니다</strong>.</p>
+        <p>이메일, 이름, 위치 등 <strong>개인 식별 정보는 일체 다루지 않습니다</strong>.</p>
       </div>
 
       <div class="section">
@@ -249,14 +249,14 @@
       <div class="lang-label">English</div>
 
       <div class="section">
-        <h2>1. Data We Collect</h2>
-        <p>The extension stores only the following, all in <code>chrome.storage.local</code>:</p>
+        <h2>1. Data Stored on Your Device</h2>
+        <p><strong>This extension collects no user data.</strong> The following items are stored only in your browser's local storage (<code>chrome.storage.local</code>) and are never transmitted to the developer or any third-party server:</p>
         <ul>
-          <li><strong>API Key</strong> — for Google Gemini, Groq, or Vertex AI</li>
+          <li><strong>API Key</strong> — for Google Gemini, Groq, or Vertex AI (issued and entered by the user)</li>
           <li><strong>Model Selection</strong> — chosen AI model for analysis</li>
-          <li><strong>Analysis History</strong> — up to 10 recent analyses</li>
+          <li><strong>Analysis History</strong> — up to 10 recent analyses (local only)</li>
         </ul>
-        <p>We do <strong>not collect</strong> emails, names, locations, or other personally identifiable information.</p>
+        <p>We do <strong>not handle</strong> emails, names, locations, or any other personally identifiable information.</p>
       </div>
 
       <div class="section">

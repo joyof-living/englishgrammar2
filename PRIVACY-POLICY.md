@@ -15,17 +15,17 @@
 - 모든 설정(API 키, 모델 선택, 분석 히스토리)은 사용자의 **브라우저 로컬 저장소**에만 보관됩니다.
 - 텍스트 분석 요청은 사용자가 선택한 AI 제공사(Google, Groq 등)로 **직접** 전송됩니다.
 
-### 1. 수집하는 정보
+### 1. 사용자 기기에 저장되는 정보
 
-본 확장은 다음 정보만을 사용자로부터 입력받으며, 모두 `chrome.storage.local`(브라우저 로컬 저장소)에 저장됩니다:
+**본 확장은 어떤 사용자 정보도 수집·전송받지 않습니다.** 다음 항목은 사용자 본인의 브라우저 로컬 저장소(`chrome.storage.local`)에만 저장되며, 개발자 서버나 제3의 장소로 전송되지 않습니다:
 
 | 항목 | 설명 | 저장 위치 |
 |---|---|---|
-| API 키 | Google Gemini, Groq, Vertex AI 등 AI 제공사의 키 | `chrome.storage.local` |
+| API 키 | Google Gemini, Groq, Vertex AI 등 (사용자가 직접 발급·입력) | `chrome.storage.local` |
 | 모델 선택 | 분석에 사용할 AI 모델 | `chrome.storage.local` |
-| 분석 히스토리 | 최근 분석한 문장/결과 (최대 10건) | `chrome.storage.local` |
+| 분석 히스토리 | 최근 분석한 문장/결과 (최대 10건, 로컬 전용) | `chrome.storage.local` |
 
-본 확장은 사용자의 이메일, 이름, 위치 등 **개인 식별 정보를 수집하지 않습니다**.
+본 확장은 사용자의 이메일, 이름, 위치 등 **개인 식별 정보를 일체 다루지 않습니다**.
 
 ### 2. 정보의 사용
 
@@ -90,17 +90,17 @@
 - All settings (API key, model selection, analysis history) are stored only in the user's **browser local storage**.
 - Text analysis requests are sent **directly** to the AI provider chosen by the user (Google, Groq, etc.).
 
-### 1. Data We Collect
+### 1. Data Stored on Your Device
 
-The extension stores only the following information, all in `chrome.storage.local` (browser-local storage):
+**This extension collects no user data.** The following items are stored only in your browser's local storage (`chrome.storage.local`) and are never transmitted to the developer or any third-party server:
 
 | Item | Description | Storage |
 |---|---|---|
-| API Key | Key for Google Gemini, Groq, Vertex AI, etc. | `chrome.storage.local` |
+| API Key | For Google Gemini, Groq, Vertex AI, etc. (issued and entered by the user) | `chrome.storage.local` |
 | Model Selection | Chosen AI model for analysis | `chrome.storage.local` |
-| Analysis History | Recently analyzed sentences/results (max 10) | `chrome.storage.local` |
+| Analysis History | Recently analyzed sentences/results (max 10, local only) | `chrome.storage.local` |
 
-We do **not collect** email, name, location, or other personally identifiable information.
+We do **not handle** email, name, location, or any other personally identifiable information.
 
 ### 2. How Information Is Used
 

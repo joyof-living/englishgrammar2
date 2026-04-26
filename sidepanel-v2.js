@@ -180,7 +180,11 @@
       body.appendChild(slot);
     }
 
-    return el('div', { className: `svoca-v2 tone-${tone}` },
+    // 청크가 길면 행 전체 폭 차지 (그렇지 않으면 짧은 카드끼리 자동 페어링)
+    const isLong = (item.en || '').length > 22;
+    const fullWidthCls = isLong ? ' full-width' : '';
+
+    return el('div', { className: `svoca-v2 tone-${tone}${fullWidthCls}` },
       el('div', { className: 'v2-bar' }),
       body,
     );

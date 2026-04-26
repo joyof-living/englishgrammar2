@@ -151,7 +151,16 @@
 .expand-btn-v2 .caret { font-size: 10px; }
 
 /* Layer 1 layouts */
-.layer1-stack { display: flex; flex-direction: column; gap: 8px; }
+/* stack: 하이브리드 그리드 — 짧은 청크는 자동으로 한 행에 2~3개, 긴 청크는 전체 폭 */
+.layer1-stack {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+  gap: 8px;
+  align-items: start;
+}
+.layer1-stack > .svoca-v2.full-width { grid-column: 1 / -1; }
+.layer1-stack > .svoca-v2:has(.layer-rail-v2-x) { grid-column: 1 / -1; }
+
 .layer1-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));

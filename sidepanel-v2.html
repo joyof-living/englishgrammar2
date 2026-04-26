@@ -3,72 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>에스보냥 (SVOCAt) — v2 미리보기</title>
+  <title>에스보냥 (SVOCAt)</title>
   <link rel="stylesheet" href="tokens.css">
   <link rel="stylesheet" href="analysis-v2.css">
-  <style>
-    /* sidepanel-v2 전용 보조 스타일 */
-    html, body { height: 100%; }
-    body { margin: 0; }
-
-    /* 샘플 토글 (Phase A 미리보기 전용) */
-    .sample-bar {
-      display: flex;
-      gap: 4px;
-      padding: 6px 12px;
-      background: var(--paper-2);
-      border-bottom: 1px solid var(--line-2);
-      overflow-x: auto;
-      flex-shrink: 0;
-    }
-    .sample-bar-label {
-      font-size: 10px; font-weight: 800;
-      color: var(--ink-3); letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 5px 4px;
-      flex-shrink: 0;
-    }
-    .sample-btn {
-      flex-shrink: 0;
-      padding: 4px 10px;
-      border-radius: 6px;
-      background: white;
-      border: 1px solid var(--line);
-      color: var(--ink-2);
-      font-size: 11px; font-weight: 600;
-      cursor: pointer;
-      font-family: var(--font-kr);
-    }
-    .sample-btn:hover { border-color: var(--ink-3); color: var(--ink); }
-    .sample-btn.active {
-      background: var(--brand-soft);
-      color: var(--brand-ink);
-      border-color: oklch(from var(--brand) l c h / 0.3);
-    }
-
-    /* SVOCA pill (head 영역의 작은 알약) */
-    .svoca-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      padding: 2px 8px;
-      border-radius: 999px;
-      font-size: 10.5px;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      line-height: 1;
-    }
-    .svoca-pill .role { font-family: var(--font-en); font-weight: 800; }
-    .svoca-pill .ko   { opacity: 0.85; font-weight: 600; }
-    .svoca-pill.s-tone { background: var(--s-bg); color: var(--s-fg); }
-    .svoca-pill.v-tone { background: var(--v-bg); color: var(--v-fg); }
-    .svoca-pill.o-tone { background: var(--o-bg); color: var(--o-fg); }
-    .svoca-pill.c-tone { background: var(--c-bg); color: var(--c-fg); }
-    .svoca-pill.a-tone { background: var(--a-bg); color: var(--a-fg); }
-    .svoca-pill.conj-tone { background: var(--conj-bg); color: var(--conj-fg); }
-    .svoca-pill.mod-tone  { background: var(--mod-bg);  color: var(--mod-fg); }
-    .svoca-pill.mv-tone   { background: var(--mv-bg);   color: var(--mv-fg); }
-  </style>
+  <link rel="stylesheet" href="sidepanel-v2-extra.css">
 </head>
 <body>
   <div class="sp2-root">
@@ -82,20 +20,27 @@
         <span class="sp2-tag en">SVOCAt</span>
       </div>
       <div class="sp2-actions">
+        <button class="sp2-icon" id="history-btn" title="최근 분석">🕘</button>
         <button class="sp2-icon" id="settings-btn" title="설정">⚙</button>
       </div>
     </header>
 
-    <!-- Phase A 전용: 샘플 토글 (Phase B에서 제거 예정) -->
-    <div class="sample-bar" id="sample-bar">
-      <span class="sample-bar-label">SAMPLE</span>
-      <!-- 버튼은 sidepanel-v2.js 가 동적으로 생성 -->
+    <!-- 히스토리 패널 (기본 숨김) -->
+    <div class="sp2-history" id="history-panel" hidden>
+      <div class="sp2-history-head">
+        <span class="sp2-history-title">최근 분석</span>
+        <button class="sp2-history-close" id="history-close" title="닫기">✕</button>
+      </div>
+      <div class="sp2-history-list" id="history-list"></div>
     </div>
 
-    <!-- 본문 -->
-    <main class="sp2-body" id="sp2-body">
-      <!-- sidepanel-v2.js 가 렌더 -->
-    </main>
+    <!-- DEV 샘플 토글 (?devmode=1 일 때만 표시) -->
+    <div class="sample-bar" id="sample-bar" hidden>
+      <span class="sample-bar-label">SAMPLE</span>
+    </div>
+
+    <!-- 본문 (JS 가 상태별 콘텐츠 주입) -->
+    <main class="sp2-body" id="sp2-body"></main>
 
   </div>
 

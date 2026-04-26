@@ -1,0 +1,300 @@
+/* sidepanel-v2-extra.css — 확장 전용 보조 스타일
+   (analysis-v2.css 가 다루지 않는: history, words, loading, error, no-key, dev sample bar) */
+
+html, body { height: 100%; }
+body { margin: 0; }
+
+/* ── 히스토리 패널 (헤더 아래 슬라이드) ── */
+.sp2-history {
+  background: white;
+  border-bottom: 1px solid var(--line-2);
+  max-height: 40vh;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+.sp2-history[hidden] { display: none; }
+.sp2-history-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 12px 6px;
+}
+.sp2-history-title {
+  font-size: 11px; font-weight: 800; letter-spacing: 0.06em;
+  color: var(--ink-3); text-transform: uppercase;
+}
+.sp2-history-close {
+  background: none; border: none; cursor: pointer;
+  width: 22px; height: 22px; border-radius: 5px;
+  font-size: 12px; color: var(--ink-3);
+}
+.sp2-history-close:hover { background: var(--paper-2); color: var(--ink); }
+
+.sp2-history-list { padding: 0 10px 10px; }
+.sp2-history-item {
+  padding: 8px 10px; margin-bottom: 4px;
+  border: 1px solid var(--line-2); border-radius: 8px;
+  cursor: pointer; transition: all 120ms ease;
+  background: white;
+}
+.sp2-history-item:hover {
+  border-color: oklch(from var(--brand) l c h / 0.3);
+  background: var(--brand-soft);
+}
+.sp2-history-item-text {
+  font-size: 12.5px; color: var(--ink); line-height: 1.4;
+  font-family: var(--font-en);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.sp2-history-item-time {
+  font-size: 10.5px; color: var(--ink-3); margin-top: 2px;
+}
+.sp2-history-empty {
+  font-size: 12.5px; color: var(--ink-3);
+  padding: 12px 4px; text-align: center;
+}
+
+/* ── DEV 샘플 토글 바 (?devmode=1) ── */
+.sample-bar {
+  display: flex; gap: 4px;
+  padding: 6px 12px;
+  background: var(--paper-2);
+  border-bottom: 1px solid var(--line-2);
+  overflow-x: auto;
+  flex-shrink: 0;
+}
+.sample-bar[hidden] { display: none; }
+.sample-bar-label {
+  font-size: 10px; font-weight: 800;
+  color: var(--ink-3); letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 5px 4px;
+  flex-shrink: 0;
+}
+.sample-btn {
+  flex-shrink: 0;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: white;
+  border: 1px solid var(--line);
+  color: var(--ink-2);
+  font-size: 11px; font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font-kr);
+}
+.sample-btn:hover { border-color: var(--ink-3); color: var(--ink); }
+.sample-btn.active {
+  background: var(--brand-soft);
+  color: var(--brand-ink);
+  border-color: oklch(from var(--brand) l c h / 0.3);
+}
+
+/* ── SVOCA pill (head 영역의 작은 알약) ── */
+.svoca-pill {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 10.5px; font-weight: 700;
+  letter-spacing: 0.02em; line-height: 1;
+}
+.svoca-pill .role { font-family: var(--font-en); font-weight: 800; }
+.svoca-pill .ko   { opacity: 0.85; font-weight: 600; }
+.svoca-pill.s-tone { background: var(--s-bg); color: var(--s-fg); }
+.svoca-pill.v-tone { background: var(--v-bg); color: var(--v-fg); }
+.svoca-pill.o-tone { background: var(--o-bg); color: var(--o-fg); }
+.svoca-pill.c-tone { background: var(--c-bg); color: var(--c-fg); }
+.svoca-pill.a-tone { background: var(--a-bg); color: var(--a-fg); }
+.svoca-pill.conj-tone { background: var(--conj-bg); color: var(--conj-fg); }
+.svoca-pill.mod-tone  { background: var(--mod-bg);  color: var(--mod-fg); }
+.svoca-pill.mv-tone   { background: var(--mv-bg);   color: var(--mv-fg); }
+
+/* ── Layer 2 슬롯 로딩 스켈레톤 (드릴다운 비동기 응답 대기) ── */
+.layer2-slot { /* 비어있을 때 차원 */ }
+.layer2-slot:empty { display: none; }
+.rail-skel-card {
+  display: flex;
+  background: white;
+  border: 1px solid var(--line-2);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+.rail-skel-card .v2-bar {
+  width: 4px; flex-shrink: 0;
+  background: var(--ink-3); opacity: 0.3;
+}
+.rail-skel-card .skel-body {
+  flex: 1; padding: 10px 12px;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.rail-skel-error {
+  padding: 8px 10px;
+  font-size: 11.5px;
+  color: oklch(0.5 0.18 25);
+  cursor: pointer;
+}
+.rail-skel-error:hover { text-decoration: underline; }
+
+.skel {
+  height: 12px; border-radius: 6px;
+  background: linear-gradient(90deg,
+    var(--paper-3) 25%,
+    var(--line) 50%,
+    var(--paper-3) 75%);
+  background-size: 200% 100%;
+  animation: skel-shimmer 1.4s infinite;
+}
+.skel-long  { width: 90%; }
+.skel-mid   { width: 60%; }
+.skel-short { width: 35%; }
+.skel-pill  { width: 60px; height: 14px; border-radius: 999px; }
+@keyframes skel-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ── 결과 이전 상태들 ── */
+.sp2-state {
+  flex: 1;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 32px 24px;
+  text-align: center;
+}
+.sp2-state h3 { margin: 14px 0 6px; font-size: 16px; font-weight: 700; color: var(--ink); }
+.sp2-state p  { margin: 0; font-size: 13px; color: var(--ink-2); line-height: 1.55; word-break: keep-all; }
+.sp2-state .sp2-state-hint {
+  margin-top: 6px;
+  font-size: 11.5px; color: var(--ink-3);
+}
+.sp2-link-btn {
+  margin-top: 16px;
+  padding: 8px 16px;
+  background: var(--brand); color: white;
+  border: none; border-radius: 8px;
+  font-family: var(--font-kr);
+  font-size: 12.5px; font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 6px oklch(from var(--brand) l c h / 0.25);
+  transition: all 120ms ease;
+}
+.sp2-link-btn:hover { background: var(--brand-2); transform: translateY(-1px); }
+
+.sp2-state-icon-emoji { font-size: 36px; }
+.sp2-state-error      { color: oklch(0.5 0.18 25); }
+
+/* ── 로딩 상태 (메인 결과 스켈레톤) ── */
+.sp2-loading {
+  padding: 12px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.sp2-loading-card {
+  border: 1px solid var(--line-2);
+  border-radius: 10px;
+  background: white;
+  padding: 12px 14px;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.sp2-loading-card.with-bar {
+  position: relative;
+  overflow: hidden;
+  padding-left: 16px;
+}
+.sp2-loading-card.with-bar::before {
+  content: "";
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: var(--ink-3); opacity: 0.25;
+}
+
+/* ── 결과 영역 (단어 섹션 등) ── */
+.sp2-result { padding: 12px; display: flex; flex-direction: column; gap: 0; }
+.sp2-result .analysis-v2 { display: flex; flex-direction: column; gap: 10px; }
+
+/* ── 단어 섹션 ── */
+.sp2-words {
+  margin-top: 16px;
+}
+.sp2-words-head {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 8px;
+}
+.sp2-words-head .dot { width: 5px; height: 5px; border-radius: 999px; background: var(--brand); }
+.sp2-words-head h3 { margin: 0; font-size: 12.5px; font-weight: 700; color: var(--ink); }
+.sp2-words-list {
+  display: flex; flex-direction: column; gap: 4px;
+}
+.sp2-word-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto;
+  gap: 2px 8px;
+  padding: 8px 10px;
+  background: white;
+  border: 1px solid var(--line-2);
+  border-radius: 8px;
+}
+.sp2-word-en {
+  font-family: var(--font-en); font-weight: 700;
+  font-size: 13px; color: var(--ink);
+}
+.sp2-word-pron {
+  font-family: var(--font-en);
+  font-size: 11px; color: var(--ink-3);
+  margin-left: 6px;
+}
+.sp2-word-pos {
+  align-self: start;
+  font-size: 9.5px; font-weight: 800;
+  letter-spacing: 0.04em;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--paper-3);
+  color: var(--ink-3);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.sp2-word-def {
+  grid-column: 1 / -1;
+  font-size: 11.5px; color: var(--ink-2);
+  line-height: 1.4;
+}
+.sp2-word-empty {
+  font-size: 12px; color: var(--ink-3);
+  padding: 6px 0;
+}
+
+/* ── 단어 사전 결과 (단일 단어 분석) ── */
+.sp2-word-card {
+  margin: 12px;
+  background: white;
+  border: 1px solid var(--line-2);
+  border-radius: 12px;
+  padding: 18px 20px;
+}
+.sp2-word-card .word-title {
+  font-family: var(--font-en);
+  font-size: 22px; font-weight: 800;
+  color: var(--ink);
+}
+.sp2-word-card .word-pron {
+  font-family: var(--font-en);
+  font-size: 13px; color: var(--ink-3);
+  margin-top: 4px;
+}
+.sp2-word-card .word-pos {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 3px 9px;
+  background: var(--brand-soft);
+  color: var(--brand-ink);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.03em;
+  border-radius: 999px;
+  border: 1px solid oklch(from var(--brand) l c h / 0.2);
+  text-transform: uppercase;
+}
+.sp2-word-card .word-def {
+  margin-top: 12px;
+  font-size: 13.5px; color: var(--ink);
+  line-height: 1.55;
+  word-break: keep-all;
+}

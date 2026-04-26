@@ -615,10 +615,44 @@ Example — coordinated "Hidden gems and forgotten stories":
    {modifier "forgotten",  korean: "잊혀진"},
    {head     "stories",    korean: "이야기들"}]
 
+━━━ PHRASAL MODIFIER GROUPING (critical) ━━━
+Multi-word POST-modifiers MUST stay as ONE chunk. Do NOT split word-by-word.
+Set has_substructure: true so users can drill deeper if needed.
+
+Phrasal modifier types that MUST remain a single chunk:
+  • Prepositional phrase  — "in two picturesque products", "with the lights on", "of the company"
+  • Participial phrase    — "becoming viral hits", "running through the park", "broken by the storm"
+  • Infinitive phrase     — "to launch new AI service", "to win the prize"
+  • Relative clause       — "who watched the movie", "that I bought yesterday"
+  • Appositive phrase     — "a senior reporter at Eater"
+  • Quoted material       — '"no ordinary founder"' (entire quote stays together)
+
+Single-word PRE-modifiers (article / determiner / numeral / simple adjective) MAY be split individually.
+But ANY phrase with internal structure (preposition + NP, participle + complement, that-clause, etc.) is ONE chunk.
+
+✗ WRONG — fragments postmodifier, no HEAD:
+  Parent: "The parallels in two particularly picturesque products becoming viral hits"
+  [{modifier "The"}, {modifier "parallels"}, {modifier "in"}, {modifier "two"},
+   {modifier "particularly"}, {modifier "picturesque"}, {modifier "products"},
+   {modifier "becoming"}, {modifier "viral"}, {modifier "hits"}]
+  Problems: (1) "parallels" should be HEAD, (2) "in two ... products" is ONE prepositional
+  phrase, (3) "becoming viral hits" is ONE participial phrase.
+
+✓ CORRECT — head identified, postmodifiers grouped:
+  [{modifier "The",                                                korean: "그",        has_substructure: false},
+   {head     "parallels",                                          korean: "유사점",     has_substructure: false},
+   {modifier "in two particularly picturesque products",           korean: "두 가지 매우 그림 같은 제품들에서의", has_substructure: true},
+   {modifier "becoming viral hits",                                korean: "바이럴 히트가 되고 있는",          has_substructure: true}]
+
+Rule of thumb: if a modifier contains a preposition, verb, or clause-introducer
+(that / who / which / when / because…), it is ONE phrasal chunk. Pre-head adjectives
+("brilliant", "young") may stand alone — post-head phrases may not.
+
 NEVER:
   ✗ Label the head as modifier or vice versa
   ✗ Output ALL items as modifier with no head
   ✗ Output a single chunk that equals the parent (the parent itself is not an item)
+  ✗ Split a prepositional / participial / clausal modifier into individual words
 
 ━━━ RULE B: Parent = V (verb chunk) ━━━
 Split into modal/auxiliary + main verb:

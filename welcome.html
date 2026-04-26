@@ -4,16 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>에스보냥 (SVOCAt) — 시작하기</title>
+  <link rel="stylesheet" href="tokens.css">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background: #f8fafc;
-      color: #1e293b;
+      font-family: var(--font-kr);
+      background: var(--paper-2);
+      color: var(--ink);
       line-height: 1.6;
       padding: 40px 20px;
       min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
     }
 
     .container {
@@ -27,52 +29,57 @@
       margin-bottom: 48px;
     }
     .hero-logo {
-      width: 72px; height: 72px;
-      background: #1e40af;
-      border-radius: 18px;
-      display: inline-flex; align-items: center; justify-content: center;
-      margin-bottom: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 22px;
     }
-    .hero-logo img { width: 48px; height: 48px; }
+    .hero-logo img {
+      width: 88px; height: 88px;
+      filter: drop-shadow(0 6px 18px oklch(0.22 0.04 260 / 0.12));
+    }
     .hero h1 {
       font-size: 28px;
       font-weight: 800;
-      color: #0f172a;
-      margin-bottom: 8px;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      margin-bottom: 10px;
     }
     .hero-tagline {
-      font-size: 16px;
-      color: #475569;
+      font-size: 15.5px;
+      color: var(--ink-2);
       max-width: 540px;
       margin: 0 auto;
+      line-height: 1.65;
     }
 
     /* ── 섹션 ── */
     section {
-      background: #fff;
-      border: 1px solid #e2e8f0;
-      border-radius: 14px;
+      background: white;
+      border: 1px solid var(--line-2);
+      border-radius: var(--r-md);
       padding: 28px 32px;
       margin-bottom: 20px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      box-shadow: var(--shadow-sm);
     }
     section h2 {
-      font-size: 18px;
-      font-weight: 700;
-      color: #0f172a;
-      margin-bottom: 20px;
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      margin-bottom: 18px;
     }
 
     /* ── 프로바이더 카드 ── */
     .provider {
-      border: 1.5px solid #e2e8f0;
+      border: 1.5px solid var(--line-2);
       border-radius: 10px;
       padding: 18px 20px;
       margin-bottom: 14px;
     }
     .provider.recommended {
-      border-color: #bfdbfe;
-      background: #eff6ff;
+      border-color: oklch(from var(--brand) l c h / 0.3);
+      background: var(--brand-soft);
     }
     .provider-header {
       display: flex;
@@ -82,148 +89,178 @@
     }
     .provider-header h3 {
       font-size: 16px;
-      font-weight: 700;
-      color: #0f172a;
+      font-weight: 800;
+      color: var(--ink);
     }
     .badge {
       display: inline-block;
       font-size: 11px;
-      font-weight: 700;
+      font-weight: 800;
       padding: 2px 8px;
-      border-radius: 4px;
-      letter-spacing: 0.02em;
+      border-radius: 999px;
+      letter-spacing: 0.03em;
     }
-    .badge-free { background: #dcfce7; color: #15803d; }
-    .badge-quality { background: #fef3c7; color: #a16207; }
+    .badge-free    { background: oklch(0.94 0.08 155); color: oklch(0.4 0.14 155); }
+    .badge-quality { background: var(--brand-soft); color: var(--brand-ink); border: 1px solid oklch(from var(--brand) l c h / 0.2); }
     .provider-subtitle {
       font-size: 13px;
-      color: #64748b;
+      color: var(--ink-2);
       margin-bottom: 12px;
     }
     .provider ol {
       margin-left: 20px;
       margin-bottom: 14px;
       font-size: 14px;
-      color: #334155;
+      color: var(--ink);
     }
     .provider ol li {
       margin-bottom: 4px;
     }
+    .provider ol code {
+      font-family: var(--font-en);
+      background: white;
+      padding: 1px 6px;
+      border-radius: 4px;
+      border: 1px solid var(--line-2);
+      font-size: 12.5px;
+    }
     .btn-link {
       display: inline-block;
-      padding: 8px 16px;
-      background: #2563eb;
-      color: #fff;
+      padding: 9px 18px;
+      background: var(--brand);
+      color: white;
       text-decoration: none;
-      border-radius: 7px;
-      font-size: 14px;
-      font-weight: 600;
-      transition: background 0.15s;
+      border-radius: 8px;
+      font-size: 13.5px;
+      font-weight: 700;
+      box-shadow: 0 2px 8px oklch(from var(--brand) l c h / 0.25);
+      transition: all 120ms ease;
     }
-    .btn-link:hover { background: #1d4ed8; }
-    .btn-link.secondary {
-      background: #fff;
-      color: #2563eb;
-      border: 1.5px solid #2563eb;
+    .btn-link:hover { background: var(--brand-2); transform: translateY(-1px); }
+
+    /* ── 과금 주의 박스 ── */
+    .warn-box {
+      background: oklch(0.97 0.05 75);
+      border: 1px solid oklch(0.85 0.1 75);
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-bottom: 14px;
+      font-size: 12.5px;
+      color: var(--ink-2);
+      line-height: 1.6;
+      word-break: keep-all;
     }
-    .btn-link.secondary:hover { background: #eff6ff; }
+    .warn-box strong { color: oklch(0.4 0.15 75); font-weight: 800; }
+    .warn-box a { color: oklch(0.4 0.15 75); }
 
     /* ── 고급자 안내 ── */
     .advanced-note {
-      font-size: 13px;
-      color: #64748b;
-      background: #f8fafc;
-      border-left: 3px solid #cbd5e1;
+      font-size: 12.5px;
+      color: var(--ink-2);
+      background: var(--paper-2);
+      border-left: 3px solid var(--line);
       padding: 10px 14px;
       margin-top: 8px;
       border-radius: 0 6px 6px 0;
+      line-height: 1.6;
     }
-    .advanced-note strong { color: #334155; }
+    .advanced-note strong { color: var(--ink); font-weight: 700; }
+    .advanced-note code { font-family: var(--font-en); background: white; padding: 1px 5px; border-radius: 3px; }
 
     /* ── 입력 섹션 ── */
-    .form-row {
-      margin-bottom: 16px;
-    }
+    .form-row { margin-bottom: 16px; }
     label {
       display: block;
       font-size: 13px;
-      font-weight: 600;
-      color: #374151;
+      font-weight: 700;
+      color: var(--ink);
       margin-bottom: 6px;
     }
     input[type=text], select {
       width: 100%;
-      padding: 10px 12px;
-      border: 1.5px solid #d1d5db;
-      border-radius: 8px;
+      padding: 11px 14px;
+      border: 1.5px solid var(--line);
+      border-radius: 10px;
       font-size: 14px;
       outline: none;
-      transition: border-color 0.15s;
-      background: #fff;
+      transition: all 120ms ease;
+      background: white;
+      font-family: var(--font-kr);
+      color: var(--ink);
     }
-    input[type=text] { font-family: monospace; }
-    input[type=text]:focus, select:focus { border-color: #2563eb; }
+    input[type=text] {
+      font-family: var(--font-en);
+      border-color: var(--brand);
+      box-shadow: 0 0 0 4px oklch(from var(--brand) l c h / 0.08);
+    }
+    input[type=text]:focus { box-shadow: 0 0 0 4px oklch(from var(--brand) l c h / 0.15); }
+    select:hover { border-color: var(--ink-3); }
+    select:focus { border-color: var(--brand); box-shadow: 0 0 0 4px oklch(from var(--brand) l c h / 0.1); }
     select { cursor: pointer; }
-    .form-hint { font-size: 12px; color: #6b7280; margin-top: 6px; }
+    .form-hint { font-size: 12px; color: var(--ink-3); margin-top: 6px; line-height: 1.55; }
 
     button#save-btn {
       width: 100%;
-      padding: 12px;
-      background: #2563eb;
-      color: #fff;
+      padding: 14px;
+      background: var(--brand);
+      color: white;
       border: none;
-      border-radius: 8px;
-      font-size: 15px;
-      font-weight: 700;
+      border-radius: 10px;
+      font-size: 14.5px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
       cursor: pointer;
       margin-top: 8px;
-      transition: background 0.15s;
+      box-shadow: 0 2px 8px oklch(from var(--brand) l c h / 0.25);
+      transition: all 120ms ease;
+      font-family: var(--font-kr);
     }
-    button#save-btn:hover { background: #1d4ed8; }
+    button#save-btn:hover { background: var(--brand-2); transform: translateY(-1px); }
 
     #status {
       margin-top: 12px;
       padding: 10px 14px;
-      border-radius: 7px;
+      border-radius: 8px;
       font-size: 13px;
       text-align: center;
       display: none;
+      word-break: keep-all;
     }
-    #status.ok { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
-    #status.err { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+    #status.ok  {
+      background: oklch(0.96 0.05 155);
+      color: oklch(0.4 0.14 155);
+      border: 1px solid oklch(0.82 0.1 155);
+    }
+    #status.err {
+      background: oklch(0.96 0.05 25);
+      color: oklch(0.5 0.18 25);
+      border: 1px solid oklch(0.82 0.1 25);
+    }
 
     /* ── 성공 상태 ── */
-    .success-box {
-      text-align: center;
-      padding: 40px 32px;
-    }
-    .success-box h2 {
-      font-size: 22px;
-      color: #15803d;
-      margin-bottom: 12px;
-    }
-    .success-box p {
-      font-size: 15px;
-      color: #475569;
-      margin-bottom: 8px;
-    }
+    .success-box { text-align: center; padding: 36px 28px; }
+    .success-box h2 { font-size: 22px; color: oklch(0.4 0.14 155); margin-bottom: 12px; }
+    .success-box p { font-size: 15px; color: var(--ink-2); margin-bottom: 8px; }
     .success-tip {
-      background: #f0fdf4;
-      border: 1px solid #bbf7d0;
-      border-radius: 8px;
+      background: oklch(0.96 0.05 155);
+      border: 1px solid oklch(0.82 0.1 155);
+      border-radius: 10px;
       padding: 14px;
       margin-top: 20px;
       font-size: 13px;
-      color: #166534;
+      color: oklch(0.35 0.13 155);
+      line-height: 1.6;
     }
 
     /* ── 푸터 ── */
     .footer {
       text-align: center;
       font-size: 12px;
-      color: #94a3b8;
+      color: var(--ink-3);
       margin-top: 32px;
     }
+    .footer a { color: var(--ink-3); text-decoration: none; }
+    .footer a:hover { color: var(--brand); }
   </style>
 </head>
 <body>
@@ -232,7 +269,7 @@
     <!-- ── 히어로 ── -->
     <header class="hero">
       <div class="hero-logo">
-        <img src="icons/icon48.png" alt="SVOCAt">
+        <img src="icons/icon128.png" alt="SVOCAt">
       </div>
       <h1>에스보냥에 오신 걸 환영합니다</h1>
       <p class="hero-tagline">
@@ -254,14 +291,14 @@
         <ol>
           <li>Google 계정으로 로그인</li>
           <li>"Get API key" → "Create API key in new project" 선택</li>
-          <li>생성된 키(<code style="font-family:monospace;background:#f1f5f9;padding:1px 5px;border-radius:3px;">AIza...</code>)를 복사해서 아래에 붙여넣기</li>
+          <li>생성된 키(<code>AIza...</code>)를 복사해서 아래에 붙여넣기</li>
         </ol>
         <a href="https://aistudio.google.com/app/apikey" target="_blank" class="btn-link">Gemini 키 받기 →</a>
       </div>
 
-      <div style="background:#fffbeb; border-left:3px solid #f59e0b; padding:12px 16px; border-radius:0 8px 8px 0; margin-bottom:14px; font-size:13px; color:#78350f; line-height:1.6;">
-        <strong style="color:#92400e;">과금 주의</strong> — Gemini API는 무료 할당량을 제공하지만 초과 시 Google Cloud 계정에 <strong>과금이 발생할 수 있습니다</strong>.
-        사용량과 결제 설정은 <a href="https://console.cloud.google.com/billing" target="_blank" style="color:#92400e;">Google Cloud Console</a>에서 확인·제한 설정하실 수 있습니다.
+      <div class="warn-box">
+        <strong>과금 주의</strong> — Gemini API는 무료 할당량을 제공하지만 초과 시 Google Cloud 계정에 <strong>과금이 발생할 수 있습니다</strong>.
+        사용량과 결제 설정은 <a href="https://console.cloud.google.com/billing" target="_blank">Google Cloud Console</a>에서 확인·제한 설정하실 수 있습니다.
       </div>
 
       <p class="advanced-note">
@@ -297,7 +334,7 @@
     <section id="success-section" style="display:none">
       <div class="success-box">
         <h2>준비 완료</h2>
-        <p id="run-info" style="color:#0f766e; font-weight:600; margin-bottom:14px;"></p>
+        <p id="run-info" style="color:oklch(0.45 0.13 200); font-weight:700; margin-bottom:14px;"></p>
         <p>이제 아무 웹페이지에서 영어 문장을 드래그하면</p>
         <p>"문법 분석" 버튼이 나타납니다.</p>
         <div class="success-tip">
@@ -309,9 +346,9 @@
 
     <p class="footer">
       설정은 언제든 확장 아이콘 클릭 후 기어(⚙) 버튼으로 변경할 수 있습니다.<br>
-      <a href="privacy-policy.html" target="_blank" style="color: #64748b; text-decoration: none;">개인정보 처리방침</a>
+      <a href="privacy-policy.html" target="_blank">개인정보 처리방침</a>
       &nbsp;·&nbsp;
-      <a href="https://github.com/joyof-living/englishgrammar2" target="_blank" style="color: #64748b; text-decoration: none;">GitHub</a>
+      <a href="https://github.com/joyof-living/englishgrammar2" target="_blank">GitHub</a>
     </p>
   </div>
 

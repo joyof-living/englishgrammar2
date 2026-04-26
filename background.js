@@ -152,6 +152,8 @@ chrome.runtime.onMessage.addListener((message, sender) => {
       pendingAnalysis = message.text;
       openUI(sender.tab);
     }
+  } else if (message.type === 'openOptions') {
+    chrome.runtime.openOptionsPage().catch(e => log('옵션 페이지 열기 실패:', e.message));
   }
   return false;
 });

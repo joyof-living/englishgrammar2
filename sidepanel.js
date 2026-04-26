@@ -5,11 +5,13 @@ const MAX_HISTORY = 10;
 const DRILLDOWN_TIMEOUT_MS = 60000;
 
 let port;
+let messageReceived = false;  // background로부터 메시지 한번이라도 받았는지
 
 // ── 포트 연결 (서비스워커 재시작 시 자동 재연결) ──
 function connectPort() {
   port = chrome.runtime.connect({ name: 'sidepanel' });
   port.onMessage.addListener((msg) => {
+    messageReceived = true;
     switch (msg.type) {
       case 'loading':
         showState('loading');
@@ -59,7 +61,10 @@ function showState(name) {
 }
 
 // ── 초기 상태: 키 유무 체크 후 분기 ──
+// race condition 방지: background가 이미 메시지(loading/result/error)를 보냈으면
+// 그 상태를 덮어쓰지 않음
 chrome.storage.local.get('apiKey', ({ apiKey }) => {
+  if (messageReceived) return;
   showState(apiKey ? 'empty' : 'no-key');
 });
 

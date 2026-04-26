@@ -306,12 +306,35 @@ DO NOT set is_complete: false for:
   ✗ Sentences with idiomatic structures
 
 ━━━ VERBLESS HEADLINE FRAGMENT (critical) ━━━
-If the input has NO main verb at the top level (e.g., "Jim Carrey, Leonardo DiCaprio
-and how the double standard of male aging may be over."):
+TRIGGER (apply when ALL conditions match):
+  • The input is a single sentence ending in a period/exclamation/question mark
+  • There is NO inflected main verb anywhere at the top level
+  • What's present is just noun phrase(s), possibly connected by "and"/"or" or comma
+  • Examples that should trigger:
+      "Jim Carrey, Leonardo DiCaprio and how the double standard of male aging may be over."
+      "Hidden gems and forgotten stories from the Renaissance era."
+      "Modern art, classical music and digital streaming."
+      "A defining challenge of our generation."
+
+Required output when trigger fires:
   • is_complete: false
-  • normalization_notes: "동사 없는 헤드라인 단편" (or similar)
-  • Analyze visible structure as fragments — multiple S chunks if needed
-  • Do NOT force a single giant S chunk to "make it complete"
+  • normalization_notes: "동사 없는 헤드라인 단편" (or similar concise note)
+  • Layer 0 grammar: do NOT bundle the entire fragment as a single S chunk.
+    Decompose into the visible noun phrase pieces (S chunks) connected by conj
+    when applicable. Or use a single S only if the fragment is one cohesive NP.
+
+NEVER:
+  ✗ Treat verbless input as a complete sentence (is_complete: true)
+  ✗ Skip the normalization_notes when this trigger fires
+  ✗ Force-fit into S/V/O when there's no V
+
+Example — "Hidden gems and forgotten stories from the Renaissance era.":
+  is_complete: false
+  normalization_notes: "동사 없는 헤드라인 단편 (등위 명사구)"
+  grammar:
+    [{S "Hidden gems",                    korean: "숨겨진 보석들"},
+     {conj "and",                         korean: "그리고"},
+     {S "forgotten stories from the Renaissance era", korean: "르네상스 시대의 잊혀진 이야기들"}]
 
 ━━━ COLON-SEPARATED HEADLINE (critical) ━━━
 Pattern: "A: B" where A is a short topic/category label and B is the main content.
@@ -338,7 +361,7 @@ Example — "Owners vs. renters: The political battle over America's single-fami
   is_complete: false
   normalization_notes: "콜론 헤드라인 (주제: 본문 구조), 본문 동사 없음"
   Layer 0:
-    [A: "Owners vs. renters", korean: "부사어 (주제)"]
+    [A: "Owners vs. renters", korean: "소유자 vs 임차인 (주제)"]
     [S: "The political battle over America's single-family homes"]
     (no V/O — post-colon is a noun phrase only)
 
@@ -346,7 +369,7 @@ Example — "Comeback of the century: K-pop phenomenon BTS returns with first co
   is_complete: true
   normalization_notes: "콜론 헤드라인 (주제: 본문 구조)"
   Layer 0:
-    [A: "Comeback of the century", korean: "부사어 (주제)"]
+    [A: "Comeback of the century", korean: "세기의 컴백 (주제)"]
     [S: "K-pop phenomenon BTS"]
     [V: "returns"]
     [A: "with first concert in years"]
@@ -369,7 +392,7 @@ Layer 0 strategy:
   • Analyze the MAIN statement normally (S V O C A)
   • Treat the postposed ", X V" as ONE chunk:
       role: "A"
-      korean: "부사어 (출처)"
+      korean: 발언자 한국어 + "에 따르면" (예: "NASA에 따르면", "AP 통신에 따르면")
       has_substructure: true   (drilldown shows internal S + V)
   • NEVER label the comma as conj
   • NEVER split the reporter into a separate top-level S + V
@@ -379,7 +402,7 @@ Example — "Rock discovery contains clearest sign of ancient life on Mars, NASA
     {S: "Rock discovery"},
     {V: "contains"},
     {O: "clearest sign of ancient life on Mars"},
-    {A: ", NASA says", korean: "부사어 (출처)", has_substructure: true}
+    {A: ", NASA says", korean: "NASA에 따르면", has_substructure: true}
   ]
 
 Example — "Site contains 124 shipwrecks, archaeologists find.":
@@ -387,11 +410,43 @@ Example — "Site contains 124 shipwrecks, archaeologists find.":
     {S: "Site"},
     {V: "contains"},
     {O: "124 shipwrecks"},
-    {A: ", archaeologists find", korean: "부사어 (출처)", has_substructure: true}
+    {A: ", archaeologists find", korean: "고고학자들에 따르면", has_substructure: true}
   ]
 
-When the user drills into the "출처" A chunk, apply RULE C Case 3 internals
-(treat the body as a clause: S + V).
+━━━ DRILLDOWN OF POSTPOSED "출처" A CHUNK ━━━
+When the user drills into a postposed reporting chunk like ", NASA says" or
+", recent studies find", apply CLAUSE decomposition (NOT simple adverb labeling):
+  • The leading comma → ignore OR set role "conj" with korean "(쉼표)"
+  • The reporter noun phrase → role "S" (KEEP MULTI-WORD NOUN PHRASES TOGETHER)
+  • The reporting verb (says / find / show / predict) → role "V" with tense/voice
+
+━━━ MULTI-WORD REPORTER (critical) ━━━
+The reporter portion can be MULTI-WORD: "recent studies", "AP sources",
+"government officials", "industry experts", "the journal", etc.
+ALL words of that noun phrase form ONE S chunk together.
+NEVER split modifier+head into separate ADV items.
+
+  ✗ ADV "recent" + ADV "studies" + ADV "find"            ← WRONG (split into 3)
+  ✗ ADV "AP" + ADV "sources" + V "say"                   ← WRONG
+  ✓ S "recent studies" + V "find"                         ← CORRECT (single S)
+  ✓ S "AP sources"     + V "say"                          ← CORRECT
+  ✓ S "government officials" + V "report"                 ← CORRECT
+
+NEVER label the reporter as "ADV" / "adv". NEVER label the verb as "ADV".
+NEVER make the entire content a flat list of ADV items.
+
+Examples — drilling into postposed reporter A chunks:
+
+  A ", NASA says":
+    ✓ [{conj ",", korean: "(쉼표)"}, {S "NASA", korean: "NASA"}, {V "says", korean: "말한다", tense: "present", voice: "active"}]
+    ✗ [{ADV ","}, {ADV "NASA"}, {ADV "says"}]   ← WRONG
+
+  A ", recent studies find":
+    ✓ [{conj ",", korean: "(쉼표)"}, {S "recent studies", korean: "최근 연구들"}, {V "find", korean: "발견하다", tense: "present", voice: "active"}]
+    ✗ [{ADV ","}, {ADV "recent"}, {ADV "studies"}, {ADV "find"}]   ← WRONG (4 ADVs)
+
+  A ", AP sources say":
+    ✓ [{conj ",", korean: "(쉼표)"}, {S "AP sources", korean: "AP 통신 소식통"}, {V "say", korean: "전한다", tense: "present", voice: "active"}]
 
 ━━━ SPEECH/COGNITION VERB + that-COMPLEMENT (critical) ━━━
 When the main verb is a speech/cognition verb (say, tell, announce, state, believe,
@@ -423,28 +478,31 @@ Set has_substructure: true when a chunk CAN be meaningfully drilled into:
   A         → false if it is a single simple adverb (quickly, always, very well, etc.)
 
 ━━━ KOREAN FIELD FORMAT (critical) ━━━
-The "korean" field is a SHORT ROLE LABEL in pure Hangul.
-NOT a translation, NOT a paraphrase. NEVER include the actual content.
+The "korean" field is a NATURAL KOREAN TRANSLATION of the chunk's English text.
+It helps learners understand each piece's meaning without leaving English.
 
-Standard labels (use these or short subtype variants):
-  S            → "주어"
-  V            → "동사"
-  O            → "목적어"
-  C            → "보어"
-  A            → "부사어"  (subtype OK: "부사어 (시간)", "부사어 (장소)", "부사어 (방법)")
-  conj         → "접속사"
-  interjection → "독립어"
+Requirements:
+  ✓ Pure Hangul (한글) ONLY. NO Hanja/Kanji/Kana/Chinese characters.
+  ✓ Concise — translate the chunk's meaning, not its grammatical role.
+  ✓ Use natural Korean word order (the role is shown by the role field separately).
+  ✓ For function words / very short chunks, give the most natural Korean equivalent;
+    if no clean translation exists, give a brief role hint instead.
 
-Hard requirements:
-  ✓ Only Hangul / Korean punctuation. NO Hanja/Kanji/Kana/Chinese characters.
-  ✓ Maximum 12 Hangul characters.
-  ✓ Same label for the same role across all chunks of one analysis.
+Examples:
+  S "A federal judge"          → korean: "연방 판사"
+  V "is raising"                → korean: "제기하고 있다"
+  O "concerns about whether..." → korean: "~인지에 관한 우려"
+  A "100 million years ago"     → korean: "1억 년 전"
+  C "no ordinary founder"       → korean: "평범한 창립자가 아닌"
+  conj "but"                    → korean: "하지만"
+  conj ","                      → korean: "(쉼표)"  (function word fallback)
+  interjection "Oh"             → korean: "오"
 
 Forbidden patterns:
-  ✗ "주어: 트럼프"             (label + content mix)
-  ✗ "트럼프 행정부의 정책"     (semantic translation)
-  ✗ "주어 또는 행위의 주체"    (verbose explanation)
-  ✗ "主語" / "動詞" / "目的語"  (Japanese / Hanja)
+  ✗ "주어"                       (raw role label — role field already says this)
+  ✗ "주어: 연방 판사"            (label + meaning mix)
+  ✗ "主語" / "判事"             (Japanese / Hanja)
+  ✗ overly long retelling that duplicates whole-sentence translation
 
 ━━━ OUTPUT — return ONLY valid JSON ━━━
 {
@@ -498,6 +556,19 @@ Split into: [head] + [modifier(s)] ONLY.
 CRITICAL: Do NOT include the parent chunk itself as an output item.
 Output ONLY the decomposed parts.
 
+PRECONDITION: RULE A applies when the chunk is a NOUN PHRASE.
+If the chunk is a VERBAL PHRASE (causative C with bare-infinitive,
+infinitive phrase, participial phrase) → use RULE C Case 4 instead
+(lowercase v / o / c / a roles, with the verb form as the first "v" item).
+
+Example — parent=C, chunk is "run ten miles every morning" (causative bare-inf):
+  Apply Case 4 (NOT RULE A):
+    [{v "run",         korean: "달리다"},
+     {o "ten miles",   korean: "10마일을"},
+     {a "every morning", korean: "매일 아침"}]
+  ✗ NOT [{modifier "run"}, {modifier "ten miles"}, {modifier "every morning"}]
+    (this would have no HEAD and treats verb phrase as noun phrase — WRONG)
+
   "head"     — the core noun, pronoun, or adjective (for C)
                 korean field: describe WHAT the head IS (e.g., "핵심명사", "핵심어", "중심 어휘").
                 Do NOT use "주어" / "목적어" / "보어" — those are the PARENT's role, not the head's.
@@ -511,12 +582,43 @@ For each modifier, set has_substructure: true and specify what kind it is in the
 
 Example — parent=S, chunk is "Ukrainian infantry officer Oleksiy Mykhailov":
   [
-    {modifier "Ukrainian",         korean: "국적 수식어"},
-    {modifier "infantry",          korean: "병과 수식어"},
-    {head "officer",               korean: "핵심명사"},
-    {modifier "Oleksiy Mykhailov", korean: "인명 동격어"}
+    {modifier "Ukrainian",         korean: "우크라이나의"},
+    {modifier "infantry",          korean: "보병의"},
+    {head "officer",               korean: "장교"},
+    {modifier "Oleksiy Mykhailov", korean: "올렉시 미하일로프"}
   ]
   NEVER output {S "Ukrainian infantry officer Oleksiy Mykhailov"} — that is the PARENT.
+
+━━━ HEAD vs MODIFIER ROLE SELECTION (critical) ━━━
+For a noun-chunk drilldown, the central noun(s) should be HEAD; everything else MODIFIER.
+
+Single-head case (most common):
+  • Exactly ONE chunk → role: "head"
+  • All others → role: "modifier"
+
+Coordinated noun phrase ("X and Y", "X, Y, and Z", "X or Y"):
+  • BOTH/ALL coordinated nouns → role: "head" (multiple heads allowed in this case)
+  • The connecting word (and/or) → role: "conj"
+  • Modifiers of either head → role: "modifier"
+
+Example — single-head "the brilliant young architect Frank Lloyd Wright":
+  [{modifier "The"},
+   {modifier "brilliant"},
+   {modifier "young"},
+   {head "architect"},
+   {modifier "Frank Lloyd Wright"}]
+
+Example — coordinated "Hidden gems and forgotten stories":
+  [{modifier "Hidden",     korean: "숨겨진"},
+   {head     "gems",       korean: "보석들"},
+   {conj     "and",        korean: "그리고"},
+   {modifier "forgotten",  korean: "잊혀진"},
+   {head     "stories",    korean: "이야기들"}]
+
+NEVER:
+  ✗ Label the head as modifier or vice versa
+  ✗ Output ALL items as modifier with no head
+  ✗ Output a single chunk that equals the parent (the parent itself is not an item)
 
 ━━━ RULE B: Parent = V (verb chunk) ━━━
 Split into modal/auxiliary + main verb:
@@ -546,15 +648,15 @@ Output order: MV … [A …] V
 Examples:
   "was again closed":
     [{MV "was", tense:null, voice:null},
-     {A "again", korean: "빈도 부사"},
+     {A "again", korean: "다시"},
      {V "closed", tense:"past", voice:"passive"}]
   "has already completed":
     [{MV "has", tense:null, voice:null},
-     {A "already", korean: "시간 부사"},
+     {A "already", korean: "이미"},
      {V "completed", tense:"present-perfect", voice:"active"}]
   "must have been carefully examined":
     [{MV "must have been", tense:null, voice:null},
-     {A "carefully", korean: "방식 부사"},
+     {A "carefully", korean: "신중히"},
      {V "examined", tense:"present-perfect", voice:"passive"}]
 
 ━━━ TENSE / VOICE ASSIGNMENT (critical) ━━━
@@ -604,6 +706,7 @@ return a single "V" item with tense and voice directly.
 ━━━ RULE C: Parent = A (adverb chunk) ━━━
 
 CASE SELECTION — look at the FIRST word(s) of the chunk:
+  • LEADING COMMA "," + noun phrase + reporting verb → Case 5 (POSTPOSED REPORTING)
   • Simple adverb (quickly, always, soon)            → Case 1
   • Preposition (in, on, at, from, to, with, of...)  → Case 2
   • Subordinating conjunction (because, while, if, although, when, as, until...)
@@ -640,7 +743,7 @@ Case 3 — Adverb clause (subordinating conjunction + clause):
     [{conj "because"},
      {S "he"},
      {V "proved"},
-     {O "whether the products were sterile", korean: "명사절 (목적어)"}]
+     {O "whether the products were sterile", korean: "제품이 무균인지"}]
     ✗ NOT: {A "whether the products were sterile"} (wrong — it's O of "proved")
 
 Case 4 — Infinitive/participial adverb phrase:
@@ -657,6 +760,36 @@ Case 4 — Infinitive/participial adverb phrase:
     ✓ [{v "to improve"}, {o "the economy"}]
   Example — "Broken by the storm":
     ✓ [{v "Broken"}, {prep "by"}, {o "the storm"}]
+
+Case 5 — POSTPOSED REPORTING CLAUSE (",  X  V" pattern):
+  When the parent A chunk starts with a comma followed by a noun phrase + reporting verb
+  (e.g., ", NASA says", ", recent studies find", ", AP sources report"):
+  Output:
+    • Leading comma → role "conj" with korean "(쉼표)"
+    • Reporter noun phrase → role "S" (KEEP MULTI-WORD NPs TOGETHER as ONE chunk)
+    • Reporting verb → role "V" with tense / voice / korean translation
+
+  CRITICAL: NEVER label items inside Case 5 as ADV.
+  CRITICAL: NEVER split a multi-word reporter into separate words.
+  The reporter "recent studies" / "AP sources" / "government officials" is ONE S chunk.
+
+  Example — ", NASA says":
+    ✓ [{conj ",", korean: "(쉼표)"},
+       {S "NASA", korean: "NASA"},
+       {V "says", korean: "말한다", tense: "present", voice: "active"}]
+    ✗ [{ADV ","}, {ADV "NASA"}, {ADV "says"}]                       ← WRONG (all ADV)
+
+  Example — ", recent studies find":
+    ✓ [{conj ",", korean: "(쉼표)"},
+       {S "recent studies", korean: "최근 연구들"},
+       {V "find", korean: "발견하다", tense: "present", voice: "active"}]
+    ✗ [{ADV ","}, {ADV "recent"}, {ADV "studies"}, {ADV "find"}]    ← WRONG (split + ADV)
+    ✗ [{ADV ","}, {ADV "recent studies"}, {ADV "find"}]             ← WRONG (still ADV)
+
+  Example — ", AP sources say":
+    ✓ [{conj ",", korean: "(쉼표)"},
+       {S "AP sources", korean: "AP 통신 소식통"},
+       {V "say", korean: "전한다", tense: "present", voice: "active"}]
 
 ━━━ RULE D: Parent = S/O/C and chunk is a CLAUSE ━━━
 TRIGGER: parent role is S, O, or C AND the chunk contains a subject + finite verb
@@ -683,17 +816,17 @@ do NOT fabricate a conj item.
 
 Example — parent=O, chunk is "that he was late" (explicit "that"):
   [
-    {conj "that", korean: "명사절 접속사"},
-    {S "he",      korean: "주어"},
-    {V "was",     korean: "연결동사", tense: "past", voice: "active"},
-    {C "late",    korean: "보어"}
+    {conj "that", korean: "~라는"},
+    {S "he",      korean: "그가"},
+    {V "was",     korean: "이었다", tense: "past", voice: "active"},
+    {C "late",    korean: "늦은"}
   ]
 
 Example — parent=O, chunk is "he was late" (implicit, no "that" in chunk):
   [
-    {S "he",      korean: "주어"},
-    {V "was",     korean: "연결동사", tense: "past", voice: "active"},
-    {C "late",    korean: "보어"}
+    {S "he",      korean: "그가"},
+    {V "was",     korean: "이었다", tense: "past", voice: "active"},
+    {C "late",    korean: "늦은"}
   ]
   NEVER add {conj "that"} here — the word "that" is not in the chunk.
 
@@ -705,47 +838,56 @@ Output it ONLY ONCE, with its clause role.
 
 Example — parent=S (modifier drilldown), chunk is "who spent 343 days on the front line":
   [
-    {S "who",       korean: "관계대명사 (주어)"},
-    {V "spent",     korean: "동사", tense: "past", voice: "active"},
-    {O "343 days",  korean: "목적어"},
-    {A "on the front line", korean: "부사구 (장소)"}
+    {S "who",       korean: "(누구)"},
+    {V "spent",     korean: "보냈다", tense: "past", voice: "active"},
+    {O "343 days",  korean: "343일을"},
+    {A "on the front line", korean: "전선에서"}
   ]
   NEVER output both {conj "who"} and {S "who"} — ONE item only.
 
 Example — chunk is "which she bought yesterday":
   [
-    {O "which",     korean: "관계대명사 (목적어)"},
-    {S "she",       korean: "주어"},
-    {V "bought",    korean: "동사", tense: "past", voice: "active"},
-    {A "yesterday", korean: "부사 (시간)"}
+    {O "which",     korean: "(무엇을)"},
+    {S "she",       korean: "그녀가"},
+    {V "bought",    korean: "샀다", tense: "past", voice: "active"},
+    {A "yesterday", korean: "어제"}
   ]
 
 Example — chunk is '"it\'s very unusual for a founder to step away"' (direct quotation):
   [
-    {S "it",                          korean: "가주어"},
-    {V "is",                          korean: "연결동사", tense: "present", voice: "active"},
+    {S "it",                          korean: "그것은"},
+    {V "is",                          korean: "이다", tense: "present", voice: "active"},
     {C "very unusual",                korean: "매우 이례적인"},
-    {A "for a founder to step away",  korean: "진주어 구 (외치 구문)"}
+    {A "for a founder to step away",  korean: "창립자가 물러나는 것은"}
   ]
 
 ━━━ KOREAN FIELD FORMAT (critical) ━━━
-"korean" 은 짧은 역할 라벨 — 의미 번역 아님. 순수 한글, 최대 12자.
+"korean" 은 청크의 영어 텍스트를 자연스럽게 번역한 한국어.
+역할은 role 필드에서 보여주므로 여기에는 의미만 적음.
 
-표준 라벨:
-  head     → "핵심어" / "핵심명사"
-  modifier → "수식어"  (subtype: "수식어 (관계절)", "수식어 (분사)")
-  S        → "주어"
-  V        → "동사"
-  MV       → "조동사"
-  O        → "목적어"
-  C        → "보어"
-  A        → "부사어"  (subtype: "부사어 (시간)", "부사어 (방법)")
-  prep     → "전치사"
-  conj     → "접속사"  (subtype: "관계대명사 (주어)", "관계대명사 (목적어)")
-  adv      → "부사"
-  v/o/c/a  → 동일 라벨 (소문자 = 비정형)
+요구사항:
+  ✓ 순수 한글만 (한자/가나/한글 외 문자 금지)
+  ✓ 자연스러운 한국어 어순
+  ✓ 짧고 직관적 — 청크의 뜻만 전달
+  ✓ 함수어(전치사·관계대명사 등)는 자연스러운 한국어 대응어 또는 간단한 힌트
 
-금지: 한자(主語/動詞), 가나, 의미 번역, "라벨: 내용" 형식.
+예시:
+  head "officer"                            → "장교"
+  modifier "Ukrainian"                      → "우크라이나의"
+  modifier "who spent 343 days..."          → "343일을 보낸"
+  MV "could"                                → "할 수 있었다"
+  V "go missing"                            → "사라지다"
+  prep "about"                              → "~에 관한"
+  conj "because"                            → "왜냐하면"
+  conj "that"                               → "~라는"
+  adv "always"                              → "항상"
+  v "Walking"                               → "걸으며"
+
+금지:
+  ✗ "주어" / "수식어" / "전치사"            (raw 역할 라벨 — role 필드와 중복)
+  ✗ "관계대명사 (주어)"                     (역할 메타정보)
+  ✗ 한자(主語), 가나
+  ✗ 전체 문장 다시 번역하기
 
 ━━━ OUTPUT — return ONLY valid JSON ━━━
 {

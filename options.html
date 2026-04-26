@@ -127,6 +127,10 @@
     <p class="hint" style="color:#b45309; background:#fffbeb; border-left:3px solid #f59e0b; padding:8px 12px; border-radius:0 6px 6px 0; margin-top:8px;">
       ⚠ <strong>과금 주의</strong>: Gemini API는 무료 할당량을 제공하지만 초과 시 <strong>Google Cloud 계정에 과금</strong>될 수 있습니다.
       사용량·결제 설정은 <a href="https://console.cloud.google.com/billing" target="_blank" style="color:#92400e;">Google Cloud Console</a>에서 관리하세요.
+      <br><br>
+      💡 <strong>안전하게 사용하려면</strong>: <a href="https://aistudio.google.com/app/apikey" target="_blank" style="color:#92400e;">Google AI Studio</a>에서 키만 발급받고 <strong>결제수단을 등록하지 마세요</strong>.
+      이 경우 무료 한도(Flash Lite 기준 일일 1,500회)를 넘으면 에러만 반환되고 과금되지 않습니다.
+      Google Cloud Console에서 "Enable Billing"을 누르지 않는 한 안전합니다.
     </p>
     <p class="hint" style="margin-top:8px; color:#64748b;">
       <strong>Google Vertex AI</strong>(<code>AQ...</code>) 또는 <strong>Groq</strong> 키(<code>gsk_...</code>)도 사용할 수 있습니다.
@@ -178,16 +182,16 @@
       <label>표시 모드</label>
       <div style="display:flex; flex-direction:column; gap:6px; padding:4px 0;">
         <label style="display:flex; align-items:center; gap:8px; font-weight:400; font-size:14px; cursor:pointer;">
-          <input type="radio" name="displayMode" value="sidepanel" checked> 사이드패널 (기본)
+          <input type="radio" name="displayMode" value="sidepanel" checked> 사이드패널 (현재 창)
         </label>
         <label style="display:flex; align-items:center; gap:8px; font-weight:400; font-size:14px; cursor:pointer;">
-          <input type="radio" name="displayMode" value="tab"> 새 탭 (Claude for Chrome과 호환)
+          <input type="radio" name="displayMode" value="tab"> 새 탭 (별도 탭)
         </label>
         <label style="display:flex; align-items:center; gap:8px; font-weight:400; font-size:14px; cursor:pointer;">
           <input type="radio" name="displayMode" value="popup"> 팝업 창 (별도 창)
         </label>
       </div>
-      <p class="hint">다른 확장이 사이드패널을 점유 중일 때 새 탭 또는 팝업 창 모드를 사용하세요. 새 탭 모드는 Claude for Chrome 등 탭 기반 확장과 함께 동작합니다.</p>
+      <p class="hint">다른 확장이 사이드패널을 점유 중일 때 새 탭 또는 팝업 창 모드를 사용하세요. 새 탭 모드는 탭 기반 확장과 함께 사용하실 수 있습니다.</p>
     </div>
 
     <button id="save-btn">저장</button>

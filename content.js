@@ -7,6 +7,40 @@ function removePopup() {
   if (popup) { popup.remove(); popup = null; }
 }
 
+// 공통 버튼 스타일 (호스트 페이지 CSS 영향 차단을 위해 !important 사용)
+const BTN_BASE = [
+  `background:#2563eb`,
+  `color:#fff`,
+  `border:none`,
+  `border-radius:6px`,
+  `font-weight:600`,
+  `cursor:pointer`,
+  `box-shadow:0 2px 10px rgba(0,0,0,0.25)`,
+  `font-family:system-ui,-apple-system,sans-serif`,
+  `letter-spacing:0.01em`,
+  `pointer-events:auto`,
+  `opacity:1`,
+  `visibility:visible`,
+  `line-height:1.2`,
+];
+
+function makeButton(label, extraStyles, onClick) {
+  const btn = document.createElement('button');
+  btn.textContent = label;
+  btn.setAttribute('style', BTN_BASE.concat(extraStyles).map(s => s + ' !important').join(';'));
+  btn.addEventListener('mouseenter', () => btn.style.setProperty('background', '#1d4ed8', 'important'));
+  btn.addEventListener('mouseleave', () => btn.style.setProperty('background', '#2563eb', 'important'));
+  btn.addEventListener('mousedown', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    onClick();
+    // 선택 영역 해제 → 이어지는 mouseup이 새 팝업을 다시 만들지 않게
+    try { window.getSelection()?.removeAllRanges(); } catch {}
+    removePopup();
+  });
+  return btn;
+}
+
 document.addEventListener('mouseup', () => {
   const sel = window.getSelection();
   const text = sel ? sel.toString().trim() : '';
@@ -17,49 +51,46 @@ document.addEventListener('mouseup', () => {
   const range = sel.getRangeAt(0);
   const rect = range.getBoundingClientRect();
 
-  popup = document.createElement('button');
-  popup.textContent = '📖 문법 분석';
-
   const POPUP_HEIGHT = 32;
   const POPUP_MARGIN = 6;
   const top = (rect.bottom + POPUP_MARGIN + POPUP_HEIGHT > window.innerHeight)
     ? rect.top - POPUP_MARGIN - POPUP_HEIGHT
     : rect.bottom + POPUP_MARGIN;
-  const left = Math.min(Math.max(4, rect.left), window.innerWidth - 120);
+  const left = Math.min(Math.max(4, rect.left), window.innerWidth - 160);
 
+  // 컨테이너 (분석 + 설정 버튼)
+  popup = document.createElement('div');
   popup.setAttribute('style', [
     `position:fixed`,
     `top:${top}px`,
     `left:${left}px`,
     `z-index:2147483647`,
-    `background:#2563eb`,
-    `color:#fff`,
-    `border:none`,
-    `border-radius:6px`,
-    `padding:5px 12px`,
-    `font-size:13px`,
-    `font-weight:600`,
-    `cursor:pointer`,
-    `box-shadow:0 2px 10px rgba(0,0,0,0.25)`,
-    `font-family:system-ui,-apple-system,sans-serif`,
-    `letter-spacing:0.01em`,
+    `display:inline-flex`,
+    `gap:4px`,
     `pointer-events:auto`,
     `opacity:1`,
     `visibility:visible`,
-    `display:inline-block`,
   ].map(s => s + ' !important').join(';'));
 
-  popup.addEventListener('mouseenter', () => { popup.style.setProperty('background', '#1d4ed8', 'important'); });
-  popup.addEventListener('mouseleave', () => { popup.style.setProperty('background', '#2563eb', 'important'); });
-
-  // mousedown으로 처리 — click보다 먼저 발생하므로 mouseup과 충돌 없음
-  popup.addEventListener('mousedown', (e) => {
-    e.preventDefault();
-    e.stopPropagation();
+  // 분석 버튼
+  const analyzeBtn = makeButton('📖 문법 분석', [
+    `padding:5px 12px`,
+    `font-size:13px`,
+  ], () => {
     chrome.runtime.sendMessage({ type: 'analyze', text });
-    removePopup();
   });
 
+  // 설정 버튼 (톱니바퀴)
+  const settingsBtn = makeButton('⚙', [
+    `padding:5px 9px`,
+    `font-size:14px`,
+  ], () => {
+    chrome.runtime.sendMessage({ type: 'openOptions' });
+  });
+  settingsBtn.title = '설정';
+
+  popup.appendChild(analyzeBtn);
+  popup.appendChild(settingsBtn);
   document.body.appendChild(popup);
 });
 

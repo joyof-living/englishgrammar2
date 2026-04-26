@@ -67,6 +67,75 @@
     }
     .guide strong { color: #92400e; }
 
+    /* ── 자유 입력 섹션 ── */
+    .input-section {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 22px 24px;
+      margin-bottom: 24px;
+    }
+    .input-section h2 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 4px;
+    }
+    .input-section .sub {
+      font-size: 13px;
+      color: #64748b;
+      margin-bottom: 14px;
+    }
+    .input-row {
+      display: flex;
+      gap: 10px;
+      align-items: stretch;
+    }
+    #user-input {
+      flex: 1;
+      min-height: 70px;
+      padding: 10px 12px;
+      border: 1.5px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 14px;
+      line-height: 1.5;
+      font-family: inherit;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    #user-input:focus { border-color: #2563eb; }
+    .btn-input {
+      padding: 0 22px;
+      background: #2563eb;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s;
+      flex-shrink: 0;
+    }
+    .btn-input:hover { background: #1d4ed8; }
+    .display-box {
+      margin-top: 14px;
+      padding: 16px 20px;
+      background: #f8fafc;
+      border: 1.5px dashed #cbd5e1;
+      border-radius: 8px;
+      font-size: 16px;
+      color: #0f172a;
+      line-height: 1.7;
+      min-height: 60px;
+      word-break: break-word;
+    }
+    .display-box.empty {
+      color: #94a3b8;
+      font-style: italic;
+      text-align: center;
+    }
+
     /* ── 카드 그리드 ── */
     .grid {
       display: grid;
@@ -181,6 +250,17 @@
       <strong>사용법:</strong> 아래 카드 중 하나를 클릭해 테스트 페이지로 이동하세요. 페이지의 영어 문장을 드래그하면 "📖 문법 분석" 버튼이 뜨고, 클릭 시 사이드패널/팝업으로 결과가 표시됩니다.
     </div>
 
+    <!-- ── 자유 입력 ── -->
+    <section class="input-section">
+      <h2>직접 입력해서 테스트</h2>
+      <p class="sub">분석하고 싶은 영어 문장을 입력하면 아래에 표출됩니다. 표출된 문장을 드래그해서 분석을 실행하세요.</p>
+      <div class="input-row">
+        <textarea id="user-input" placeholder="영어 문장을 여기에 입력하세요..." spellcheck="false"></textarea>
+        <button id="input-btn" class="btn-input">입력</button>
+      </div>
+      <div id="display-box" class="display-box empty">입력한 문장이 여기에 표시됩니다</div>
+    </section>
+
     <div class="grid" id="grid">
       <div class="loading">테스트 페이지 확인 중…</div>
     </div>
@@ -254,6 +334,29 @@
     }
 
     loadTests();
+
+    // ── 자유 입력 핸들러 ──
+    const userInput  = document.getElementById('user-input');
+    const inputBtn   = document.getElementById('input-btn');
+    const displayBox = document.getElementById('display-box');
+
+    function applyInput() {
+      const text = userInput.value.trim();
+      if (!text) {
+        displayBox.classList.add('empty');
+        displayBox.textContent = '입력한 문장이 여기에 표시됩니다';
+        return;
+      }
+      displayBox.classList.remove('empty');
+      displayBox.textContent = text;
+    }
+    inputBtn.addEventListener('click', applyInput);
+    userInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+        e.preventDefault();
+        applyInput();
+      }
+    });
   </script>
 </body>
 </html>

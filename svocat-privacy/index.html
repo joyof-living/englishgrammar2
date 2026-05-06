@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>에스보냥 (SVOCAt) 개인정보처리방침</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", sans-serif;
+    line-height: 1.75;
+    color: #2C2C2A;
+    background: #FFFFFF;
+  }
+  h1 {
+    font-size: 28px;
+    font-weight: 600;
+    margin: 0 0 8px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #2C2C2A;
+  }
+  h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 40px 0 12px;
+    color: #185FA5;
+  }
+  h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 24px 0 8px;
+  }
+  p, li { font-size: 15px; }
+  ul { padding-left: 22px; }
+  li { margin: 4px 0; }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  th, td {
+    border: 1px solid #D3D1C7;
+    padding: 10px 14px;
+    text-align: left;
+  }
+  th { background: #F1EFE8; font-weight: 600; }
+  code {
+    background: #F1EFE8;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-family: "SF Mono", Menlo, monospace;
+  }
+  hr {
+    border: 0;
+    border-top: 1px solid #D3D1C7;
+    margin: 40px 0;
+  }
+  a { color: #185FA5; }
+  .meta { color: #888780; font-size: 14px; margin-bottom: 32px; }
+  .summary {
+    background: #FAEEDA;
+    border-left: 4px solid #FAC775;
+    padding: 16px 20px;
+    border-radius: 4px;
+    margin: 24px 0;
+  }
+  .summary p { margin: 6px 0; }
+  .lang-divider {
+    margin: 60px 0 40px;
+    text-align: center;
+    color: #888780;
+    font-size: 13px;
+    letter-spacing: 2px;
+  }
+  strong { font-weight: 600; }
+</style>
+</head>
+<body>
+
+<h1>에스보냥 (SVOCAt) 개인정보처리방침</h1>
+<p class="meta"><strong>최종 수정일:</strong> 2026-04-26 · <strong>버전:</strong> 2.1.2</p>
+
+<div class="summary">
+  <p><strong>요약</strong></p>
+  <p>본 확장 프로그램은 사용자의 개인정보를 수집하지 않으며, 개발자 소유의 서버로 전송하지 않습니다.</p>
+  <p>모든 설정은 사용자의 브라우저 로컬 저장소에만 보관됩니다.</p>
+  <p>분석 요청은 사용자가 선택한 AI 제공사로 직접 전송됩니다.</p>
+</div>
+
+<h2>1. 사용자 기기에 저장되는 정보</h2>
+
+<p>본 확장 프로그램은 어떤 사용자 정보도 수집하거나 전송받지 않습니다. 다음 항목은 사용자 본인의 브라우저 로컬 저장소(<code>chrome.storage.local</code>)에만 저장되며, 개발자 서버나 제3의 장소로 전송되지 않습니다.</p>
+
+<table>
+  <thead>
+    <tr><th>항목</th><th>설명</th><th>저장 위치</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>API 키</td><td>Google Gemini, Groq, Vertex AI 등 (사용자가 직접 발급·입력)</td><td><code>chrome.storage.local</code></td></tr>
+    <tr><td>모델 선택</td><td>분석에 사용할 AI 모델</td><td><code>chrome.storage.local</code></td></tr>
+    <tr><td>분석 히스토리</td><td>최근 분석 문장/결과 (최대 10건, 로컬 전용)</td><td><code>chrome.storage.local</code></td></tr>
+  </tbody>
+</table>
+
+<p>이메일, 이름, 위치 등 개인 식별 정보는 일체 다루지 않습니다.</p>
+
+<h2>2. 정보의 사용</h2>
+
+<ul>
+  <li><strong>API 키:</strong> 사용자가 텍스트 분석을 요청할 때, 사용자가 선택한 AI 제공사의 API 엔드포인트로만 전송됩니다.</li>
+  <li><strong>선택한 텍스트:</strong> 동일한 AI 제공사로 전송되어 문법 분석과 번역에 사용됩니다.</li>
+  <li><strong>분석 히스토리:</strong> 사이드패널의 "최근 분석" 기능을 위해 로컬에만 보관됩니다.</li>
+  <li>개발자는 이 정보에 접근할 수 없습니다.</li>
+</ul>
+
+<h2>3. 외부 서비스 (제3자 제공)</h2>
+
+<p>선택한 텍스트는 사용자가 선택한 다음 AI 제공사 중 하나로 전송됩니다.</p>
+
+<table>
+  <thead>
+    <tr><th>제공사</th><th>엔드포인트</th><th>개인정보처리방침</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Google (Gemini)</td>
+      <td><code>generativelanguage.googleapis.com</code></td>
+      <td><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">링크</a></td>
+    </tr>
+    <tr>
+      <td>Google (Vertex AI)</td>
+      <td><code>aiplatform.googleapis.com</code></td>
+      <td><a href="https://cloud.google.com/terms/cloud-privacy-notice?hl=ko" target="_blank" rel="noopener">링크</a></td>
+    </tr>
+    <tr>
+      <td>Groq</td>
+      <td><code>api.groq.com</code></td>
+      <td><a href="https://groq.com/privacy-policy" target="_blank" rel="noopener">링크</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>각 제공사의 약관이 해당 전송에 적용됩니다. 본 확장 프로그램은 단순 중계자이며 전송 내용을 열람·저장·가공하지 않습니다.</p>
+
+<h2>4. 쿠키 및 추적</h2>
+<ul>
+  <li>쿠키를 사용하지 않습니다.</li>
+  <li>사용자 활동을 추적하지 않습니다 (클릭, 스크롤, 사용 텔레메트리 없음).</li>
+  <li>Google Analytics, Mixpanel 등 분석 도구를 포함하지 않습니다.</li>
+  <li>광고 또는 마케팅 목적의 정보 수집을 하지 않습니다.</li>
+</ul>
+
+<h2>5. 데이터 저장 및 삭제</h2>
+<ul>
+  <li>모든 데이터는 브라우저 로컬 저장소에만 저장됩니다.</li>
+  <li>확장 프로그램 제거 시 관련 데이터가 함께 삭제됩니다.</li>
+  <li>개별 삭제: 옵션 페이지의 "저장된 키 삭제" 버튼을 이용하세요.</li>
+  <li>완전한 보안을 위해, 삭제 후 잔존 데이터가 우려되면 발급처(Groq, Google)에서 API 키를 직접 폐기(rotate)하시기 바랍니다.</li>
+</ul>
+
+<h2>6. 보안</h2>
+<ul>
+  <li>API 키는 Chrome의 자체 암호화 정책에 따라 저장됩니다.</li>
+  <li>AI 제공사와의 통신은 HTTPS로만 이루어집니다.</li>
+  <li>기기 도난 위험 방지를 위해 OS 수준 암호화(BitLocker, FileVault)를 권장합니다.</li>
+</ul>
+
+<h2>7. 어린이의 개인정보 보호</h2>
+<p>본 확장 프로그램은 만 13세 미만 어린이를 대상으로 하지 않습니다.</p>
+
+<h2>8. 정책 변경</h2>
+<p>본 방침은 향후 수정될 수 있으며, 중요 변경사항은 확장 프로그램 업데이트 릴리스 노트에 공지됩니다. 변경 시 본 페이지의 "최종 수정일"이 갱신됩니다.</p>
+
+<div class="lang-divider">— ENGLISH VERSION —</div>
+
+<h1>Privacy Policy for 에스보냥 (SVOCAt)</h1>
+<p class="meta"><strong>Last Updated:</strong> 2026-04-26 · <strong>Version:</strong> 2.1.2</p>
+
+<div class="summary">
+  <p><strong>Summary</strong></p>
+  <p>This extension collects no user data and does not transmit any data to developer-owned servers.</p>
+  <p>All settings are stored only in the user's local browser storage.</p>
+  <p>Analysis requests are sent directly to the AI provider chosen by the user.</p>
+</div>
+
+<h2>1. Data Stored on Your Device</h2>
+
+<p>This extension collects no user data. The following items are stored only in your browser's local storage (<code>chrome.storage.local</code>) and are never transmitted to the developer or any third-party server:</p>
+
+<ul>
+  <li><strong>API Key</strong> — for Google Gemini, Groq, or Vertex AI (issued and entered by the user)</li>
+  <li><strong>Model Selection</strong> — chosen AI model for analysis</li>
+  <li><strong>Analysis History</strong> — up to 10 recent analyses (local only)</li>
+</ul>
+
+<p>We do not handle emails, names, locations, or any other personally identifiable information.</p>
+
+<h2>2. How Information Is Used</h2>
+<ul>
+  <li>API key and selected text are sent only to the AI provider chosen by the user.</li>
+  <li>Analysis history is stored locally only, for the "Recent Analyses" feature.</li>
+  <li>The developer has no access to any of this data.</li>
+</ul>
+
+<h2>3. Third-Party Services</h2>
+
+<p>When requesting analysis, the selected text is sent to one of: Google (Gemini / Vertex AI) or Groq. Each provider's privacy policy applies. This extension is merely a relay; it does not read, store, or process the text content on its own servers (it has none).</p>
+
+<table>
+  <thead>
+    <tr><th>Provider</th><th>Endpoint</th><th>Privacy Policy</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Google (Gemini)</td>
+      <td><code>generativelanguage.googleapis.com</code></td>
+      <td><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Link</a></td>
+    </tr>
+    <tr>
+      <td>Google (Vertex AI)</td>
+      <td><code>aiplatform.googleapis.com</code></td>
+      <td><a href="https://cloud.google.com/terms/cloud-privacy-notice?hl=ko" target="_blank" rel="noopener">Link</a></td>
+    </tr>
+    <tr>
+      <td>Groq</td>
+      <td><code>api.groq.com</code></td>
+      <td><a href="https://groq.com/privacy-policy" target="_blank" rel="noopener">Link</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>4. Cookies, Tracking, Analytics</h2>
+<p>None. No cookies, no tracking, no analytics tools (Google Analytics, Mixpanel, etc.), no advertising.</p>
+
+<h2>5. Data Deletion</h2>
+<ul>
+  <li>Uninstalling the extension removes all data.</li>
+  <li>Use the "Delete saved key" button in options to remove the API key.</li>
+  <li>For complete security, rotate your API key at the provider (Groq, Google).</li>
+</ul>
+
+<h2>6. Security</h2>
+<ul>
+  <li>HTTPS-only communication.</li>
+  <li>API keys stored per Chrome's own encryption policy.</li>
+</ul>
+
+<h2>7. Children's Privacy</h2>
+<p>This extension is not directed at children under 13.</p>
+
+<h2>8. Changes</h2>
+<p>This policy may be updated. Check the "Last Updated" date above.</p>
+
+</body>
+</html>

@@ -9,7 +9,6 @@
   const MAX_DRILL_DEPTH = 2;          // depth 0(L1) → 1(L2) → 2(L3) — 그 이상 X
   const MAX_HISTORY = 10;
   const DRILLDOWN_TIMEOUT_MS = 60000;
-  const DEV_MODE = new URLSearchParams(location.search).has('devmode');
 
   // ════════════════════════════════════════════════
   // v1 → v2 role 매핑
@@ -630,48 +629,6 @@
   document.getElementById('history-close').addEventListener('click', () => {
     historyPanel.hidden = true;
   });
-
-  // ════════════════════════════════════════════════
-  // DEV 모드: 샘플 토글 바
-  // ════════════════════════════════════════════════
-  if (DEV_MODE) {
-    const sampleBar = document.getElementById('sample-bar');
-    const SAMPLE_KEYS = ['coffee', 'economy', 'abc_news', 'renaissance', 'microsoft'];
-    const SAMPLE_LABELS = {
-      coffee: 'Coffee', economy: 'Economy', abc_news: 'ABC News',
-      renaissance: 'Renaissance', microsoft: 'Microsoft',
-    };
-    sampleBar.hidden = false;
-
-    SAMPLE_KEYS.forEach(key => {
-      const btn = el('button', { className: 'sample-btn', type: 'button' }, SAMPLE_LABELS[key]);
-      btn.addEventListener('click', () => {
-        // v2 sample → v1-shape 어댑터 (간이)
-        const s = window.SAMPLES?.[key];
-        if (!s) return;
-        const fakeData = {
-          type: 'grammar',
-          original: s.refineOriginal || s.raw,
-          normalized: s.raw,
-          normalization_notes: s.refine?.note || '',
-          translation: s.ko,
-          grammar: s.layer1.map(it => ({
-            role: it.role,
-            text: it.en,
-            korean: it.trans,
-            has_substructure: !!it.expandable,
-            tense: it.tag?.split(' · ')?.[0]?.includes('present') || it.tag?.split(' · ')?.[0]?.includes('past') ? it.tag.split(' · ')[0] : undefined,
-            voice: it.tag?.includes('active') ? 'active' : it.tag?.includes('passive') ? 'passive' : undefined,
-          })),
-          words: [],
-        };
-        showResult(fakeData);
-        sampleBar.querySelectorAll('.sample-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-      });
-      sampleBar.appendChild(btn);
-    });
-  }
 
   // ════════════════════════════════════════════════
   // 시작

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "에스보냥 (SVOCAt) — SVOCA 영어 문법 분석기",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "영어 문장을 드래그하면 SVOCA 구조로 분석하고 한국어로 번역해주는 문법 학습 도구",
   "icons": {
     "16": "icons/icon16.png",
